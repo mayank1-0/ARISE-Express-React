@@ -1,0 +1,29 @@
+<body>
+    <h1>Add</h1>
+    <button onclick="add()">add</button>
+    <h1>View</h1>
+    <button onclick="view()">view</button>
+    <h1>Edit</h1>
+    <button onclick="edit()">edit</button>
+    <h1>Delete</h1>
+    <button onclick="delete1()">delete</button>
+    <script>
+        var toView = 0;
+        function add(){
+            window.location.href = '/question-answer-form'
+        }
+
+        function view(){
+            toView = 1;
+            window.location.href = '/question-answers'
+        }
+
+        function edit(){
+            window.location.href = '/edit-question-answer-1'
+        }
+
+        function delete1(){
+            window.location.href = '/question-answer-form'
+        }
+    </script>
+</body>

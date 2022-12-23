@@ -1,0 +1,50 @@
+<body>
+    <br>
+    <form id="form" action="/edit-question-answer-2" method="get">
+        <label for="question_id">Enter Question Id</label><br>
+        <input type="text" id="question_id" placeholder="Question_Id" name="question_id" /><br><br>
+        <input type="button" value="Submit" onclick="next()" />
+    </form>
+    <script>
+        $(() => {
+            notSubmitOnEnter()
+        })
+        function notSubmitOnEnter() {
+            $("#question_id").on("keydown", function (e) {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                }
+            });
+        }
+        function next() {
+            const token = window.localStorage.getItem('token');
+            console.log('1111 ', token);
+            var data = { question_id: $("#question_id").val() }
+            console.log('2222', data.question_id);
+            if (!data.question_id) {
+                alert('Please enter a Question_Id')
+            }
+            else {
+                $.ajax({                      //will initiate a post request to specified url and fetch result from that
+                    type: "POST",
+                    url: "/checkQuestionId",         //loads and executes the javaScript file associated with this route.
+                    dataType: 'JSON',
+                    data: data,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    success: function success(result) {
+                        console.log(result);
+                        window.alert('Found the question')
+                        $("#form").submit();
+                    },
+                    error: function error(error) {
+                        window.alert('No such question with the given question_id exists')
+                        console.log(error)
+                        // window.alert(error.responseJSON.data.errors[0].message);
+                    }
+                })
+            }
+        }
+    </script>
+</body>

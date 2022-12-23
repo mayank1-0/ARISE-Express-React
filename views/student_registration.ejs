@@ -1,0 +1,161 @@
+<body>
+    <h1>Registration Form</h1>
+    <br>
+    <!-- <form role="form"> -->
+        <!-- <label for="enrolment_number">enrolment_number</label> -->
+        <input type="text" id="enrolment_number" placeholder="enrolment_number"><br><br>
+
+        <!-- <label for="centre_code">centre_code</label> -->
+        <input type="text" id="centre_code" placeholder="centre_code"><br><br>
+
+        <!-- <label for="registration_number">registration_number</label> -->
+        <input type="text" id="registration_number" placeholder="registration_number"><br><br>
+
+        <!-- <label for="Student_Name">Student_Name</label> -->
+        <input type="text" id="Student_Name" placeholder="Student_Name"><br><br>
+
+        <!-- <label for="Father_Name">Father_Name</label> -->
+        <input type="text" id="Father_Name" placeholder="Father_Name"><br><br>
+
+        <!-- <label for="Mother_Name">Mother_Name</label> -->
+        <input type="text" id="Mother_Name" placeholder="Mother_Name"><br><br>
+
+        <!-- <label for="Date_of_birth">Date_of_birth</label> -->
+        <input type="text" id="Date_of_birth" placeholder="Date_of_birth"><br><br>
+
+        <!-- <label for="Marital_status">Marital_status</label> -->
+        <input type="text" id="Marital_status" placeholder="Marital_status"><br><br>
+
+        <!-- <label for="Sex">Sex</label> -->
+        <input type="text" id="Sex" placeholder="Sex"><br><br>
+
+        <!-- <label for="Category">Category</label> -->
+        <input type="text" id="Category" placeholder="Category"><br><br>
+
+        <!-- <label for="Address">Address</label> -->
+        <input type="text" id="Address" placeholder="Address"><br><br>
+
+        <!-- <label for="Sector_Village_Colony">Sector/Village/Colony</label> -->
+        <input type="text" id="Sector_Village_Colony" placeholder="Sector_Village_Colony"><br><br>
+
+        <!-- <label for="City">City</label> -->
+        <input type="text" id="City" placeholder="City"><br><br>
+
+        <!-- <label for="State">State</label> -->
+        <input type="text" id="State" placeholder="State"><br><br>
+
+        <!-- <label for="Pin_code">Pin_code</label> -->
+        <input type="number" id="Pin_code" placeholder="Pin_code"><br><br>
+
+        <!-- <label for="Contact_number">Contact_number</label> -->
+        <input type="number" id="Contact_number" placeholder="Contact_number"><br><br>
+
+        <!-- <label for="Parents_contact">Parents_contact</label> -->
+        <input type="number" id="Parents_contact" placeholder="Parents_contact"><br><br>
+
+        <!-- <label for="Highest_educational_qualification">Highest_educational_qualification</label> -->
+        <input type="text" id="Highest_educational_qualification" placeholder="Highest_educational_qualification"><br><br>
+
+        <!-- <label for="Course_name">Course_name</label> -->
+        <input type="text" id="Course_name" placeholder="Course_name"><br><br>
+
+        <!-- <label for="Duration">Duration(in months)</label> -->
+        <input type="text" id="Duration" placeholder="Duration"><br><br>
+
+        <!-- <label for="Course_code">Course_code</label> -->
+        <input type="text" id="Course_code" placeholder="Course_code"><br><br>
+
+        <!-- <label for="Date_of_joining">Date_of_joining</label> -->
+        <input type="text" id="Date_of_joining" placeholder="Date_of_joining"><br><br>
+
+        <!-- <label for="Batch_time">Batch_time</label> -->
+        <input type="text" id="Batch_time" placeholder="Batch_time"><br><br>
+
+        <!-- <label for="Registration_fee">Registration_fee</label> -->
+        <input type="number" id="Registration_fee" placeholder="Registration_fee"><br><br>
+
+        <!-- <label for="Monthly_fee">Monthly_fee</label> -->
+        <input type="number" id="Monthly_fee" placeholder="Monthly_fee"><br><br>
+
+        <!-- <label for="Discount">Discount</label> -->
+        <input type="number" id="Discount" placeholder="Discount"><br><br>
+
+        <!-- <label for="Percent_discount">Percent_discount</label> -->
+        <input type="number" id="Percent_discount" placeholder="Percent_discount"><br><br>
+
+        <!-- <label for="Monthly_installment">Monthly_installment</label> -->
+        <input type="number" id="Monthly_installment" placeholder="Monthly_installment"><br><br>
+
+        <!-- <label for="Note">Note(If any)</label> -->
+        <input type="text" id="Note" placeholder="Note"><br><br>
+
+        <!-- <label for="School">School name & address</label> -->
+        <input type="text" id="School" placeholder="School"><br><br>
+
+        <!-- <label for="Admission_type">Admission_Type</label> -->
+        <input type="text" id="Admission_type" placeholder="Admission_type"><br><br>
+
+        <!-- <label for="Photograph">Upload Photograph</label> -->
+        <!-- <input type="file" id="Photograph" name="Photograph"><br><br> -->
+
+        <!-- <label for="Signature">Signature</label> -->
+        <!-- <input type="file" id="Signature" name="Signature"><br><br> -->
+
+        <button type="button" onclick="submit()">Submit</button>
+    <!-- </form> -->
+    <script>
+        function submit() {
+            var data = {
+                enrolment_number: $("#enrolment_number").val(),
+                centre_code: $("#centre_code").val(),
+                registration_number: $("#registration_number").val(),
+                Student_Name: $("#Student_Name").val(),
+                Father_Name: $("#Father_Name").val(),
+                Mother_Name: $("#Mother_Name").val(),
+                Date_of_birth: $("#Date_of_birth").val(),
+                Marital_status: $("#Marital_status").val(),
+                Sex: $("#Sex").val(),
+                Category: $("#Category").val(),
+                Address: $("#Address").val(),
+                Sector_Village_Colony: $("#Sector_Village_Colony").val(),
+                City: $("#City").val(),
+                State: $("#State").val(),
+                Pin_code: $("#Pin_code").val(),
+                Contact_number: $("#Contact_number").val(),
+                Parents_contact: $("#Parents_contact").val(),
+                Highest_educational_qualification: $("#Highest_educational_qualification").val(),
+                Course_name: $("#Course_name").val(),
+                Duration: $("#Duration").val(),
+                Course_code: $("#Course_code").val(),
+                Date_of_joining: $("#Date_of_joining").val(),
+                Batch_time: $("#Batch_time").val(),
+                Registration_fee: $("#Registration_fee").val(),
+                Monthly_fee: $("#Monthly_fee").val(),
+                Discount: $("#Discount").val(),
+                Percent_discount: $("#Percent_discount").val(),
+                Monthly_installment: $("#Monthly_installment").val(),
+                Note: $("#Note").val(),
+                School_name_address: $("#School").val(),
+                Admission_Type: $("#Admission_type").val()
+            //     Photograph: $("#Photograph").val(),
+            //     Signature: $("#Signature").val()
+            }
+        console.log(data);
+            $.ajax({                      //will initiate a post request to specified url and fetch result from that
+                type: "POST",
+                url: "/register-student",         //loads and executes the javaScript file associated with this route.
+                dataType: 'JSON',
+                data: data,
+                success: function success(result) {
+                    console.log(result);
+                    window.location.href = '/student-login';
+                },
+                error: function error(error) {
+                    console.log('hgfyf', error)
+                    // window.alert(error.responseJSON.data.errors[0].message);
+                }
+            })
+        }
+    </script>
+</body>
+

@@ -1,0 +1,45 @@
+<body>
+    <label for="updatefield">Field to be updated(Enter field names in small alphabets & questionId cannot be
+        changed)</label><br><br>
+    <input type="text" id="fieldUpdate" name="updatefield"><br><br>
+    <label for="updateValue">Field value to be updated</label><br><br>
+    <input type="text" id="valueUpdate" name="updateValue"><br><br>
+    <button onclick="update()">Update</button>
+    <script>
+        function update() {
+            const token = window.localStorage.getItem('token');
+            console.log('pppp ', token);
+            const params = new URLSearchParams(window.location.search);
+            const question_id = params.get("question_id");
+            var data = {
+                question_id: question_id,
+                fieldUpdate: $("#fieldUpdate").val(),
+                valueUpdate: $('#valueUpdate').val()
+            }
+            console.log('2222', data);
+            if (!data.fieldUpdate || !data.valueUpdate) {
+                alert('Please enter a field and value to update')
+            }
+            else {
+                $.ajax({                      //will initiate a post request to specified url and fetch result from that
+                    type: "PUT",
+                    url: "/edit-question-answer",         //loads and executes the javaScript file associated with this route.
+                    dataType: 'JSON',
+                    data: data,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    success: function success(result) {
+                        console.log(result);
+                        window.alert('Huurrayy! Successfully updated the question')
+                        
+                    },
+                    error: function error(error) {
+                        window.alert('Unsuccessful in updating the question. Please try again.')
+                        console.log(error)
+                    }
+                })
+            }
+        }
+    </script>
+</body>

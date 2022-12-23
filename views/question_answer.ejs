@@ -1,0 +1,51 @@
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">course_name</th>
+        <th scope="col">course_code</th>
+        <th scope="col">module</th>
+        <th scope="col">topic</th>
+        <th scope="col">questionId</th>
+        <th scope="col">question</th>
+        <th scope="col">option1</th>
+        <th scope="col">option2</th>
+        <th scope="col">option3</th>
+        <th scope="col">option4</th>
+        <th scope="col">answer</th>
+      </tr>
+    </thead>
+    <tbody id="tr">
+    </tbody>
+  </table>
+
+  <script>
+    var token = '';
+    $(() => {
+      token = window.localStorage.getItem('token');
+      // console.log(token);
+      fetchQuestionAnswers();
+    });
+    function fetchQuestionAnswers() {
+      $.ajax({
+        type: "POST",
+        url: "/view-question-answers",
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader("Authorization", "Bearer " + token);
+        },
+        success: function success(result) {
+          console.log(result);
+          result = result.data;
+          var tr = '';
+          result.map((i) => {
+            tr += '<tr><td>' + i.course_name + '</td><td>' + i.course_code + '</td><td>' + i.module + '</td><td>' + i.topic + '</td><td>' + i.questionId + '</td><td>' + i.question + '</td><td>' + i.option1 + '</td><td>' + i.option2 + '</td><td>' + i.option3 + '</td><td>' + i.option4 + '</td><td>' + i.answer + '</td>';
+          });
+          $("#tr").html(tr);    //.html() is like .innerHTML  
+        },
+        error: function error(error) {
+          console.log(error, 'error');
+        }
+      })
+    }
+  </script>
+</body>
