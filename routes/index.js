@@ -6,7 +6,7 @@ const checkLogIn = require('../middleware/checkLogIn');
 const upload = require("../middleware/upload");
 
 
-const { registration_form, register_student, student_login, login_student, staff_login, login_staff, question_answer_login, question_answers_choose, login_question_answer, question_answer_form, question_answer_form_2, add_question_answer, edit_question_answer_form_1, edit_question_answer_form_2, edit_question_answer, check_question_id, delete_question_answer, uploadCsvFile, question_answers, view_question_answers } = require('../controller/student_controller')
+const { registration_form, register_student, student_login, login_student, staff_login, login_staff, staff_dashboard, admissions, question_answer_login, question_answers_choose, login_question_answer, question_answer_form, question_answer_form_2, add_question_answer, edit_question_answer_form_1, edit_question_answer_form_2, edit_question_answer, check_question_id, delete_question_answer, uploadCsvFile, question_answers, view_question_answers } = require('../controller/student_controller')
 
 router.get('/registration-form', registration_form)
 router.post('/register-student', register_student)
@@ -14,7 +14,8 @@ router.get('/student-login', student_login)
 router.post('/login-student', login_student)
 router.get('/staff-login', staff_login)
 router.post('/login-staff', login_staff)
-
+router.get('/staff-dashboard', staff_dashboard)
+router.get('/admission', admissions)
 // router.get('/question-answer-login', isLoggedIn, question_answer_login)
 // router.post('/login-question-answer', login_question_answer)
 // router.get('/question-answer-choose', checkLogIn, question_answers_choose)
@@ -29,8 +30,6 @@ router.post('/login-staff', login_staff)
 // router.delete('/delete-question-answer/:questionId', auth, delete_question_answer)
 // router.get('/question-answers', checkLogIn, question_answers);
 // router.post('/view-question-answers', auth, view_question_answers)
-
-module.exports = router
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

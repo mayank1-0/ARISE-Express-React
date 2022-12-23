@@ -53,7 +53,7 @@ const staff_login = (req, res) => {
 const login_staff = (req, res) => {
   const staff_login = req.body;
   if (
-    staff_login.staff_id == "staff123" &&
+    staff_login.staff_name == "staff123" &&
     staff_login.password == "staff123"
   ) {
     userID = randomstring.generate();
@@ -80,6 +80,13 @@ const login_staff = (req, res) => {
   }
 };
 
+const staff_dashboard = (req, res) => {
+  res.render("staff_dashboard");
+};
+
+const admissions = (req, res) => {
+  res.render("admissions");
+};
 
 const question_answer_login = (req, res) => {
   res.render("question_answer_login");
@@ -453,6 +460,8 @@ module.exports = {
   login_student,
   staff_login,
   login_staff,
+  staff_dashboard,
+  admissions,
   question_answer_login,
   login_question_answer,
   question_answers_choose,
