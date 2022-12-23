@@ -46,6 +46,41 @@ const login_student = async (req, res) => {
   }
 };
 
+const staff_login = (req, res) => {
+  res.render("staff_login");
+};
+
+const login_staff = (req, res) => {
+  const staff_login = req.body;
+  if (
+    staff_login.staff_id == "staff123" &&
+    staff_login.password == "staff123"
+  ) {
+    userID = randomstring.generate();
+    const token = jwt.sign(
+      { userId: userID, isActive: true },
+      config.jwtSecret,
+      { expiresIn: "1h" }
+    ); //if matches then creates a jwt token.
+    let sessionData = req.session; // from where does req.session takes data ????????????????????
+    sessionData.user = { name: "staff" };
+    sessionData.token = token;
+    res.status(200).send({
+      status: 200,
+      token: token,
+      data: "Login successful",
+      message: "Login Successful",
+    });
+  } else {
+    res.status(500).send({
+      status: 500,
+      data: "Invalid credentials",
+      message: "Invalid Credentials",
+    });
+  }
+};
+
+
 const question_answer_login = (req, res) => {
   res.render("question_answer_login");
 };
@@ -416,6 +451,8 @@ module.exports = {
   register_student,
   student_login,
   login_student,
+  staff_login,
+  login_staff,
   question_answer_login,
   login_question_answer,
   question_answers_choose,
