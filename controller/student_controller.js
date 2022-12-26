@@ -50,17 +50,22 @@ const staff_login = (req, res) => {
   res.render("staff_login");
 };
 
-const login_staff = (req, res) => {
+const login_staff = async (req, res) => {
+  const Staff_Login = db.Staff_Details_Model
   const staff_login = req.body;
-  if (
-    staff_login.staff_name == "staff123" &&
-    staff_login.password == "staff123"
-  ) {
+  const userData = await Staff_Login.findOne({ where: {Username: staff_login.staff_name, Password: staff_login.password}})
+  if ( !userData ) {
+    res.status(500).send({
+      status: 500,
+      data: "Invalid credentials",
+      message: "Invalid Credentials",
+    });
+  } else {
     userID = randomstring.generate();
     const token = jwt.sign(
-      { userId: userID, isActive: true },
+      { userId: userID, isActive: true, Username: userData.Username },
       config.jwtSecret,
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     ); //if matches then creates a jwt token.
     let sessionData = req.session; // from where does req.session takes data ????????????????????
     sessionData.user = { name: "staff" };
@@ -71,18 +76,32 @@ const login_staff = (req, res) => {
       data: "Login successful",
       message: "Login Successful",
     });
-  } else {
-    res.status(500).send({
-      status: 500,
-      data: "Invalid credentials",
-      message: "Invalid Credentials",
-    });
   }
 };
 
 const staff_dashboard = (req, res) => {
   res.render("staff_dashboard");
 };
+
+const fetchStaffDetails = async ( req,res ) => {
+  try{
+  var token = req.body
+  token = token.token
+  console.log('1111', token);
+  const decodedToken = jwt.verify( token, config.jwtSecret )
+  console.log('2222', decodedToken);
+  const userName = decodedToken.Username
+  console.log('3333', userName);
+  const Staff_Details = db.Staff_Details_Model
+  const result = await Staff_Details.findOne({
+    where: { Username: userName }
+  })
+  res.status(200).send({status: 200, data: result, message: "Details fetched successfully"})
+  }
+  catch(error){
+    res.status(500).send({status: 500, data: error, message: "Something went wrong"})
+  }
+}
 
 const admissions = (req, res) => {
   res.render("admissions");
@@ -461,6 +480,7 @@ module.exports = {
   staff_login,
   login_staff,
   staff_dashboard,
+  fetchStaffDetails,
   admissions,
   question_answer_login,
   login_question_answer,

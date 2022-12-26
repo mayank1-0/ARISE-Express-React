@@ -82,7 +82,7 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
         allowNull: true,
       },
       Adhar_card_number_scan_copy: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       Username: {

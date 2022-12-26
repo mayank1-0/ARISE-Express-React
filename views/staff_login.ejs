@@ -19,6 +19,7 @@
                 success: function success(result) {
                     console.log(result);
                     window.alert('Login Successful')
+                    window.localStorage.setItem('token', result.token)
                     window.location.href = '/staff-dashboard';
                 },
                 error: function error(error) {
