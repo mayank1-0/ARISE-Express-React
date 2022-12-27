@@ -27,8 +27,6 @@ router.delete('/delete-question-answer/:questionId', auth, delete_question_answe
 router.get('/question-answers', checkLogIn, question_answers);
 router.post('/view-question-answers', auth, view_question_answers)
 
-module.exports = router
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'ARISE' });
