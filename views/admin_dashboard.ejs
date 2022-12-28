@@ -1,6 +1,8 @@
 <body>
-    <h2>Staff Dashboard</h2>
-    <label>Staff Name </label>
+    <h2>Admin Dashboard</h2>
+    <button onclick="change_password()">change password</button><br>
+    <button onclick="logout()">logout</button><br>
+    <!-- <label>Staff Name </label>
     <p id="staff_name"></p><br>
     <label>Empl. No. </label>
     <p id="employment_number"></p><br>
@@ -19,8 +21,11 @@
     <label>Designation </label>
     <p id="designation"></p><br>
     <label>Date Of Joining </label>
-    <p id="date_of_joining"></p><br>
-    <button onclick="admission()">ADMISSION</button>
+    <p id="date_of_joining"></p><br> -->
+    <button onclick="staff()">STAFF</button><br>
+    <button onclick="course()">COURSE</button><br>
+    <button onclick="enquiry()">ENQUIRY</button><br>
+    <button onclick="admission()">ADMISSION</button><br>
     <script>
         var token = ""
         token = window.localStorage.getItem('token');
@@ -50,7 +55,7 @@
         }
         function admission() {
             window.alert("Admission button clicked")
-            window.location.href = "/student/admissions"
+            window.location.href = "/admissions"
         }
     </script>
 </body>

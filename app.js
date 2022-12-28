@@ -10,8 +10,9 @@ const session = require('express-session');
 global.__basedir = __dirname + "/ARISE1/..";
 
 
-var indexRouter = require('./routes/index');
+var studentRouter = require('./routes/student');
 var adminRouter = require('./routes/admin');
+var staffRouter = require('./routes/staff');
 
 var app = express();
 
@@ -34,8 +35,10 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/', indexRouter);
+app.use('/', studentRouter);
 app.use('/admin', adminRouter);
+app.use('/staff', staffRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

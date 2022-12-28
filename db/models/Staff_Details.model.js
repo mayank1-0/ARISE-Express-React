@@ -1,5 +1,9 @@
+const bcrypt = require("bcrypt");
+
 const Staff_Details_Model = (Sequelize, sequelize) => {
-    const Staff_Details = sequelize.define("Staff_Details", {
+  const Staff_Details = sequelize.define(
+    "Staff_Details",
+    {
       // Model attributes are defined here
       employment_number: {
         type: Sequelize.STRING,
@@ -13,7 +17,7 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
       },
       Employee_Name: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       Father_Name: {
         type: Sequelize.STRING,
@@ -23,15 +27,15 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          isDate: true
-        }
+          isDate: true,
+        },
       },
       Date_of_Birth: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          isDate: true
-        }
+          isDate: true,
+        },
       },
       Marital_status: {
         type: Sequelize.STRING,
@@ -43,15 +47,15 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          notEmpty: true
-        }
+          notEmpty: true,
+        },
       },
       Sector_Village_Colony: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          notEmpty: true
-        }
+          notEmpty: true,
+        },
       },
       Contact_number: {
         type: Sequelize.BIGINT,
@@ -59,25 +63,25 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
       },
       email: {
         type: Sequelize.STRING,
-        validate: { 
-            isEmail: true 
-        }
+        validate: {
+          isEmail: true,
+        },
       },
       Educational_qualification: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          notEmpty: true
-        }
+          notEmpty: true,
+        },
       },
       Professional_qualification: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          notEmpty: true
-        }
+          notEmpty: true,
+        },
       },
-        Photograph: {
+      Photograph: {
         type: Sequelize.BLOB,
         allowNull: true,
       },
@@ -85,17 +89,58 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      Username: {
+      username: {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      Password: {
+      password: {
         type: Sequelize.STRING,
         allowNull: true,
-      }
-    });
-    return Staff_Details
-  };
-  
-  module.exports = Staff_Details_Model;
-  
+      },
+    },
+
+    {
+      hooks: {
+        //any operation we do before a function
+        beforeCreate(user, options) {
+          //function called before creating a table.
+          // console.log(user.toJSON().password);
+          if (user.toJSON().password) {
+            return bcrypt
+              .hash(user.toJSON().password, 10) //converts password into hash or salt.
+              .then((hash) => {
+                // console.log(hash);
+                // user.toJSON().password = hash;
+                user.set("password", hash);
+              })
+              .catch((err) => {
+                console.log(err);
+                throw new Error();
+              });
+          }
+        },
+        beforeUpdate(user, options) {
+          //function called before updating a table.
+          // console.log(user.toJSON().password);
+          if (user.toJSON().password) {
+            return bcrypt
+              .hash(user.toJSON().password, 10)
+              .then((hash) => {
+                // console.log(hash);
+                // user.toJSON().password = hash;
+                user.set("password", hash);
+              })
+              .catch((err) => {
+                console.log(err);
+                throw new Error();
+              });
+          }
+        },
+      },
+    }
+  );
+
+  return Staff_Details;
+};
+
+module.exports = Staff_Details_Model;

@@ -13,14 +13,14 @@
         console.log(data);
             $.ajax({                      //will initiate a post request to specified url and fetch result from that
                 type: "POST",
-                url: "/login-staff",         //loads and executes the javaScript file associated with this route.
+                url: "/staff/login-staff",         //loads and executes the javaScript file associated with this route.
                 dataType: 'JSON',
                 data: data,
                 success: function success(result) {
                     console.log(result);
                     window.alert('Login Successful')
                     window.localStorage.setItem('token', result.token)
-                    window.location.href = '/staff-dashboard';
+                    window.location.href = '/staff/staff-dashboard';
                 },
                 error: function error(error) {
                     window.alert('Invalid Credentials')

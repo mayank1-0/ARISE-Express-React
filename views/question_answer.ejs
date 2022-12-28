@@ -29,7 +29,7 @@
     function fetchQuestionAnswers() {
       $.ajax({
         type: "POST",
-        url: "/view-question-answers",
+        url: "/staff/view-question-answers",
         beforeSend: function (xhr) {
           xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
