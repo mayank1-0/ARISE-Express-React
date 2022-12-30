@@ -1,13 +1,15 @@
 <body>
     <h1>Staff Login</h1>
     <br>
-    <input type="text" id="staff_name" placeholder="staff_name"><br><br>
+    <input type="text" id="center" placeholder="center_name"><br><br>
+    <input type="text" id="username" placeholder="username"><br><br>
     <input type="password" id="password" placeholder="password"><br><br>
     <button type="button" onclick="login()">LOGIN</button>
     <script>
         function login() {
             var data = {
-                staff_name: $("#staff_name").val(),
+                center: $("#center").val(),
+                username: $("#username").val(),
                 password: $("#password").val(),
             }
         console.log(data);

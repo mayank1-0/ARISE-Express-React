@@ -5,6 +5,7 @@ const db = require("../db/models/index");
 const config = require("../config.json");
 const fs = require("fs");
 const csv = require("fast-csv");
+const bcrypt = require('bcrypt')
 
 const add_staff = async (req, res) => {
   try {
@@ -33,34 +34,41 @@ const staff_login = (req, res) => {
 };
 
 const login_staff = async (req, res) => {
-  const Staff_Login = db.Staff_Details_Model;
-  const staff_login = req.body;
-  const userData = await Staff_Login.findOne({
-    where: { Username: staff_login.staff_name, Password: staff_login.password },
-  });
-  if (!userData) {
-    res.status(500).send({
-      status: 500,
-      data: "Invalid credentials",
-      message: "Invalid Credentials",
+  try {
+    var staff_data = req.body;
+    console.log('1111', staff_data);
+    const Staff_Details = db.Staff_Details_Model
+    let staff_credentials = await Staff_Details.findOne({
+      plain: true,
+      where: { center: staff_data.center, username: staff_data.username },
+      attributes: ["employment_number", "username", ["password", "hashedPass"]],
     });
-  } else {
-    console.log('11111', userData);
-    userID = randomstring.generate();
-    const token = jwt.sign(
-      { userId: userID, isActive: true, Username: userData.Username },
-      config.jwtSecret,
-      { expiresIn: "24h" }
-    ); //if matches then creates a jwt token.
-    let sessionData = req.session; // from where does req.session takes data ????????????????????
-    sessionData.user = { name: "staff" };
-    sessionData.token = token;
-    res.status(200).send({
-      status: 200,
-      token: token,
-      data: "Login successful",
-      message: "Login Successful",
-    });
+    console.log('2222', staff_credentials);
+    if (!staff_credentials) {
+      res.status(401).send({ message: "User not found. Please try again" });
+    } else {
+      staff_credentials = staff_credentials.toJSON();
+      console.log('3333', staff_credentials);
+      const match = await bcrypt.compare(
+        staff_data.password,
+        staff_credentials.hashedPass
+      );
+      if (!match) {
+        res.status(401).send({ message: "Invalid Password. Please try again" });
+      } else {
+        //console.log("awdawdawdawd" + req.session);
+        const token = jwt.sign(
+          { employment_number: staff_credentials.employment_number, isActive: true },
+          config.jwtSecret,
+          { expiresIn: "1h" }
+        );
+        let sessionData = req.session;
+        sessionData.token = token;
+        res.status(200).send({ token: token, message: "Login Successfull" });
+      }
+    }
+  } catch (error) {
+    res.status(500).send({ data: error, message: "Something went wrong" });
   }
 };
 
@@ -70,16 +78,16 @@ const staff_dashboard = (req, res) => {
 
 const fetchStaffDetails = async (req, res) => {
   try {
-    var token = req.body;
-    token = token.token;
+    var sessionData = req.session
+    var token = sessionData.token
     console.log("1111", token);
-    const decodedToken = jwt.verify(token, config.jwtSecret);
+    var decodedToken = jwt.verify(token, config.jwtSecret);
     console.log("2222", decodedToken);
-    const userName = decodedToken.Username;
-    console.log("3333", userName);
+    const employmentNumber = decodedToken.employment_number;
+    console.log("3333", employmentNumber);
     const Staff_Details = db.Staff_Details_Model;
     const result = await Staff_Details.findOne({
-      where: { Username: userName },
+      where: { employment_number: employmentNumber },
     });
     res
       .status(200)

@@ -1,9 +1,9 @@
 <body>
     <h2>Staff Dashboard</h2>
+    <label>Center</label>
+    <p id="center"></p><br>
     <label>Staff Name </label>
     <p id="staff_name"></p><br>
-    <label>Empl. No. </label>
-    <p id="employment_number"></p><br>
     <label>Father's Name </label>
     <p id="father_name"></p><br>
     <label>Sex </label>
@@ -20,31 +20,39 @@
     <p id="designation"></p><br>
     <label>Date Of Joining </label>
     <p id="date_of_joining"></p><br>
-    <button onclick="admission()">ADMISSION</button>
+    <a href="">Admission</a>
+    <a href="">Update Profile</a>
+    <a href="">Change Password</a>
+    <a href="">Logout</a>
+
     <script>
-        var token = ""
-        token = window.localStorage.getItem('token');
         $(() => {
-            token = window.localStorage.getItem('token');
             fetchStaffDetails()
         })
-        var data = { token: token }
         function fetchStaffDetails() {
             $.ajax({
                 type: "POST",
                 url: "/staff/fetch-staff-details",
-                dataType: 'JSON',
-                data: data,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", "Bearer " + token);
-                },
+                // beforeSend: function (xhr) {
+                //     xhr.setRequestHeader("Authorization", "Bearer " + token);
+                // },
                 success: function success(result) {
                     console.log(result);
+                    result = result.data;
+                    $("#center").text(result.center);
+                    $("#staff_name").text(result.Employee_Name);
+                    $("#father_name").text(result.Father_Name);
+                    $("#sex").text(result.Sex);
+                    $("#dob").text(result.Date_of_Birth);
+                    $("#marital_status").text(result.Marital_status);
+                    $("#contact_number").text(result.Contact_number);
+                    $("#email_id").text(result.email);
+                    $("#designation").text(result.designation);
+                    $("#date_of_joining").text(result.Date_of_joining);
                 },
                 error: function error(error) {
                     console.log(error, 'error');
                     // $('.custom-container').noty({text: error.responseText.message});
-                    errorNotification(error.responseJSON.message);
                 }
             })
         }

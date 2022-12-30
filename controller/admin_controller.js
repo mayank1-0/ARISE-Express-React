@@ -26,22 +26,23 @@ const admin = async (req, res) => {
   }
 };
 
+const admin_login = (req, res) => {
+  res.render('admin_login_page')
+}
+
 const login_admin = async (req, res) => {
   try {
     var admin_data = req.body;
-    console.log('1111', admin_data);
     const Admin = db.Admin_Model;
     let admin_credentials = await Admin.findOne({
       plain: true,
       where: { username: admin_data.username },
       attributes: ["id", "username", ["password", "hashedPass"]],
     });
-    console.log('2222', admin_credentials);
     if (!admin_credentials) {
       res.status(401).send({ message: "User not found. Please try again" });
     } else {
       admin_credentials = admin_credentials.toJSON();
-      console.log('3333', admin_credentials);
       const match = await bcrypt.compare(
         admin_data.password,
         admin_credentials.hashedPass
@@ -53,7 +54,7 @@ const login_admin = async (req, res) => {
         const token = jwt.sign(
           { username: admin_credentials.username, isActive: true },
           config.jwtSecret,
-          { expiresIn: "1h" }
+          { expiresIn: "10h" }
         );
         let sessionData = req.session;
         sessionData.token = token;
@@ -65,6 +66,52 @@ const login_admin = async (req, res) => {
   }
 };
 
-const change_password_admin = async (req, res) => {};
+const admin_dashboard = (req, res) => {
+  res.render('admin_dashboard')
+}
 
-module.exports = { admin, login_admin, change_password_admin };
+const admin_change_password = (req, res) => {
+  res.render('admin_change_password')
+}
+
+const change_password_admin = async (req, res) => {
+  try {
+    var password_data = req.body
+    if( !password_data.oldPassword || !password_data.password || !password_data.confirmPassword){
+      res.status(500).send({ status: 500, message: 'Fill all password fields', data: 'Fill all passwords'})
+    }
+    else if( password_data.password !== password_data.confirmPassword){
+      res.status(500).send({ status: 500, message: 'Please enter same newPassword and confirmNewPassword', data: 'new password and confirm new passwords aren\'t same'})
+    }
+    else{
+      const Admin = db.Admin_Model
+      let admin_data = await Admin.findOne()
+      admin_data = admin_data.toJSON()
+      const match = await bcrypt.compare(password_data.oldPassword, admin_data.password);
+      if(!match){
+        res.status(401).send({status: 401, message: "Incorrect old password"})
+      }
+      else{
+        const result = await Admin.update({ password: password_data.password }, {where: { username: "admin" }, individualHooks: true})
+        res.status(200).send({status: 200, data: result, message: "Password changed successfully"})
+      }
+
+    } 
+  } catch (error) {
+    res.status(500).send({ status: 500, message: "Something went wrong", data: error })
+  }
+};
+
+const admin_logout = async (req, res) => {
+  try {
+    let sessionData = req.session;
+    const logout = await sessionData.destroy();
+    // console.log(logout);
+    res.redirect('/admin/admin-login');
+  } catch (e) {
+    console.log(e);
+    res.status(500).send({ error: e, message: 'Logout Failed. Please try again' });
+  }
+}
+
+module.exports = { admin, admin_login, login_admin, admin_dashboard, admin_change_password, change_password_admin, admin_logout };

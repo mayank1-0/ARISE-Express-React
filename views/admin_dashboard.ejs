@@ -1,7 +1,7 @@
 <body>
     <h2>Admin Dashboard</h2>
-    <button onclick="change_password()">change password</button><br>
-    <button onclick="logout()">logout</button><br>
+    <a href="/admin/admin-change-password">change password</a><br>
+    <a href="/admin/admin-logout">logout</a><br>
     <!-- <label>Staff Name </label>
     <p id="staff_name"></p><br>
     <label>Empl. No. </label>
@@ -27,29 +27,19 @@
     <button onclick="enquiry()">ENQUIRY</button><br>
     <button onclick="admission()">ADMISSION</button><br>
     <script>
-        var token = ""
-        token = window.localStorage.getItem('token');
         $(() => {
-            token = window.localStorage.getItem('token');
-            fetchStaffDetails()
         })
-        var data = { token: token }
+
         function fetchStaffDetails() {
             $.ajax({
                 type: "POST",
                 url: "/staff/fetch-staff-details",
-                dataType: 'JSON',
-                data: data,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", "Bearer " + token);
-                },
                 success: function success(result) {
                     console.log(result);
+                    window.alert("Staff details fetched successfully");
                 },
                 error: function error(error) {
                     console.log(error, 'error');
-                    // $('.custom-container').noty({text: error.responseText.message});
-                    errorNotification(error.responseJSON.message);
                 }
             })
         }
@@ -57,5 +47,6 @@
             window.alert("Admission button clicked")
             window.location.href = "/admissions"
         }
+
     </script>
 </body>

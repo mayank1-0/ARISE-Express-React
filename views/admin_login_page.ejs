@@ -17,14 +17,12 @@
                 dataType: 'JSON',
                 data: data,
                 success: function success(result) {
-                    console.log(result);
                     window.alert('Login Successful')
-                    // window.location.href = '/';
+                    window.location.href = '/admin/admin-dashboard';
                 },
                 error: function error(error) {
                     window.alert('Invalid Credentials')
                     console.log(error)
-                    // window.alert(error.responseJSON.data.errors[0].message);
                 }
             })
         }

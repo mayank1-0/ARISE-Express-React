@@ -8,6 +8,9 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
       employment_number: {
         type: Sequelize.STRING,
       },
+      center: {
+        type: Sequelize.STRING,
+      },
       type: {
         type: Sequelize.STRING,
         // allowNull defaults to true

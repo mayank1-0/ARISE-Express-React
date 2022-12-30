@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 
-module.exports = (Sequelize, sequelize) => {
-  const Admin_Model = sequelize.define("Admin",
+const Admin_Model = (Sequelize, sequelize) => {
+  const Admin = sequelize.define("Admin",
     {
       username: {
         type: Sequelize.STRING,
@@ -24,7 +24,7 @@ module.exports = (Sequelize, sequelize) => {
         //any operation we do before a function
         beforeCreate(user, options) {
           //function called before creating a table.
-          // console.log(user.toJSON().password);
+          console.log('0000',user.toJSON().password);
           if (user.toJSON().password) {
             return bcrypt
               .hash(user.toJSON().password, 10) //converts password into hash or salt.
@@ -41,7 +41,7 @@ module.exports = (Sequelize, sequelize) => {
         },
         beforeUpdate(user, options) {
           //function called before updating a table.
-          // console.log(user.toJSON().password);
+          console.log('----', user.toJSON().password);
           if (user.toJSON().password) {
             return bcrypt
               .hash(user.toJSON().password, 10)
@@ -60,5 +60,7 @@ module.exports = (Sequelize, sequelize) => {
     }
   );
 
-  return Admin_Model;
+  return Admin;
 };
+
+module.exports = Admin_Model
