@@ -1,0 +1,55 @@
+<body>
+    <h2>Staff Dashboard</h2>
+    <!-- <label>Center</label>
+    <input id="center"></input><br> -->
+    <label>Staff Name </label>
+    <input id="staff_name"></input><br>
+    <label>Father's Name </label>
+    <input id="father_name"></input><br>
+    <label>Sex </label>
+    <input id="sex"></input><br>
+    <!-- <label>DOB </label>
+    <input id="dob"></input><br> -->
+    <label>Marital Status </label>
+    <input id="marital_status"></input><br>
+    <label>Contact Number </label>
+    <input id="contact_number"></input><br>
+    <label>Email Id </label>
+    <input id="email_id"></input><br>
+    <!-- <label>Designation </label>
+    <input id="designation"></input><br>
+    <label>Date Of Joining </label>
+    <input id="date_of_joining"></input><br> -->
+    <button onclick="update()">Update</button>
+
+    <script>
+        var token = window.localStorage.getItem('token')
+        function update() {
+            var data = {
+                staff_name: $('#staff_name').val(),
+                father_name: $('#father_name').val(),
+                sex: $('#sex').val(),
+                marital_status: $('#marital_status').val(),
+                contact_number: $('#contact_number').val(),
+                email_id: $('#email_id').val()
+            }
+            $.ajax({
+                type: "PUT",
+                url: "/staff/profile-update",
+                data: data,
+                dataType: 'JSON',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                success: function success(result) {
+                    console.log(result);
+                    window.location.href="/staff/staff-dashboard"
+                },
+                error: function error(error) {
+                    console.log(error, 'error');
+                    // $('.custom-container').noty({text: error.responseText.message});
+                }
+            })
+        }
+    </script>
+</body>

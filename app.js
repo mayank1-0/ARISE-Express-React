@@ -9,6 +9,7 @@ const db = require('./db/models/index')
 const session = require('express-session');
 global.__basedir = __dirname + "/ARISE1/..";
 
+require('dotenv').config();
 
 var studentRouter = require('./routes/student');
 var adminRouter = require('./routes/admin');

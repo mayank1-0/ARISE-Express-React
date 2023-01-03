@@ -5,6 +5,9 @@
     <input type="password" id="password" placeholder="password"><br><br>
     <button type="button" onclick="login()">LOGIN</button>
     <script>
+        $(() => {
+            window.localStorage.clear()
+        })
         function login() {
             var data = {
                 username: $("#username").val(),

@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
-const randomstring = require('randomstring');
-const moment = require('moment');
+const randomstring = require("randomstring");
+const moment = require("moment");
 const db = require("../db/models/index");
 const config = require("../config.json");
 const fs = require("fs");
 const csv = require("fast-csv");
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 
 const add_staff = async (req, res) => {
   try {
@@ -36,19 +36,19 @@ const staff_login = (req, res) => {
 const login_staff = async (req, res) => {
   try {
     var staff_data = req.body;
-    console.log('1111', staff_data);
-    const Staff_Details = db.Staff_Details_Model
+    console.log("1111", staff_data);
+    const Staff_Details = db.Staff_Details_Model;
     let staff_credentials = await Staff_Details.findOne({
       plain: true,
       where: { center: staff_data.center, username: staff_data.username },
       attributes: ["employment_number", "username", ["password", "hashedPass"]],
     });
-    console.log('2222', staff_credentials);
+    console.log("2222", staff_credentials);
     if (!staff_credentials) {
       res.status(401).send({ message: "User not found. Please try again" });
     } else {
       staff_credentials = staff_credentials.toJSON();
-      console.log('3333', staff_credentials);
+      console.log("3333", staff_credentials);
       const match = await bcrypt.compare(
         staff_data.password,
         staff_credentials.hashedPass
@@ -58,7 +58,10 @@ const login_staff = async (req, res) => {
       } else {
         //console.log("awdawdawdawd" + req.session);
         const token = jwt.sign(
-          { employment_number: staff_credentials.employment_number, isActive: true },
+          {
+            employment_number: staff_credentials.employment_number,
+            isActive: true,
+          },
           config.jwtSecret,
           { expiresIn: "1h" }
         );
@@ -78,8 +81,8 @@ const staff_dashboard = (req, res) => {
 
 const fetchStaffDetails = async (req, res) => {
   try {
-    var sessionData = req.session
-    var token = sessionData.token
+    var sessionData = req.session;
+    var token = sessionData.token;
     console.log("1111", token);
     var decodedToken = jwt.verify(token, config.jwtSecret);
     console.log("2222", decodedToken);
@@ -89,13 +92,11 @@ const fetchStaffDetails = async (req, res) => {
     const result = await Staff_Details.findOne({
       where: { employment_number: employmentNumber },
     });
-    res
-      .status(200)
-      .send({
-        status: 200,
-        data: result,
-        message: "Details fetched successfully",
-      });
+    res.status(200).send({
+      status: 200,
+      data: result,
+      message: "Details fetched successfully",
+    });
   } catch (error) {
     res
       .status(500)
@@ -468,6 +469,113 @@ const view_question_answers = async (req, res) => {
   }
 };
 
+const update_profile = (req, res) => {
+  res.render("update_profile");
+};
+
+const profile_update = async (req, res) => {
+  try {
+    var new_details = req.body;
+    const token = req.session.token;
+    var decodedToken = jwt.verify(token, config.jwtSecret);
+    const employmentNumber = decodedToken.employment_number;
+    const Staff_Details = db.Staff_Details_Model;
+    const result = await Staff_Details.update(
+      {
+        Employee_Name: new_details.staff_name,
+        Father_Name: new_details.father_name,
+        Sex: new_details.sex,
+        Marital_status: new_details.marital_status,
+        Contact_number: new_details.contact_number,
+        email: new_details.email_id
+      },
+      {
+        where: { employment_number: employmentNumber },
+        individualHooks: true,
+      }
+    );
+    res.status(200).send({ status: 200, data: result, message: "Information updated successfully"})
+  } catch (error) {
+    res.status(500).send({ status: 500, data: error, message: "Something went wrong"})
+  }
+};
+
+const staff_change_password = (req, res) => {
+  res.render("staff_change_password");
+};
+
+const change_password_staff = async (req, res) => {
+  try {
+    var password_data = req.body;
+    if (
+      !password_data.oldPassword ||
+      !password_data.password ||
+      !password_data.confirmPassword
+    ) {
+      res.status(500).send({
+        status: 500,
+        message: "Fill all password fields",
+        data: "Fill all passwords",
+      });
+    } else if (password_data.password !== password_data.confirmPassword) {
+      res.status(500).send({
+        status: 500,
+        message: "Please enter same newPassword and confirmNewPassword",
+        data: "new password and confirm new passwords aren't same",
+      });
+    } else {
+      var token = req.body.token;
+      var decodedToken = jwt.verify(token, config.jwtSecret);
+      const employmentNumber = decodedToken.employment_number;
+      const Staff = db.Staff_Details_Model;
+      let staff_data = await Staff.findOne({
+        where: { employment_number: employmentNumber },
+      });
+      staff_data = staff_data.toJSON();
+      const match = await bcrypt.compare(
+        password_data.oldPassword,
+        staff_data.password
+      );
+      if (!match) {
+        res
+          .status(401)
+          .send({ status: 401, message: "Incorrect old password" });
+      } else {
+        const result = await Staff.update(
+          { password: password_data.password },
+          {
+            where: { employment_number: employmentNumber },
+            individualHooks: true,
+          }
+        );
+        res.status(200).send({
+          status: 200,
+          data: result,
+          message: "Password changed successfully",
+        });
+      }
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .send({ status: 500, message: "Something went wrong", data: error });
+  }
+};
+
+const staff_logout = async (req, res) => {
+  try {
+    let sessionData = req.session;
+    const logout = await sessionData.destroy();
+    // console.log(logout);
+    res.redirect("/staff/staff-login");
+  } catch (e) {
+    console.log(e);
+    res
+      .status(500)
+      .send({ error: e, message: "Logout Failed. Please try again" });
+  }
+};
+
 module.exports = {
   add_staff,
   staff_login,
@@ -489,4 +597,9 @@ module.exports = {
   delete_question_answer,
   question_answers,
   view_question_answers,
+  update_profile,
+  profile_update,
+  staff_change_password,
+  change_password_staff,
+  staff_logout,
 };

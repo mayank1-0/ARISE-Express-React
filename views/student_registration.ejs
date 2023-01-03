@@ -136,22 +136,25 @@
                 Monthly_installment: $("#Monthly_installment").val(),
                 Note: $("#Note").val(),
                 School_name_address: $("#School").val(),
-                Admission_Type: $("#Admission_type").val()
+                Admission_Type: $("#Admission_type").val(),
+                Password: $("#enrolment_number").val()
             //     Photograph: $("#Photograph").val(),
             //     Signature: $("#Signature").val()
             }
         console.log(data);
             $.ajax({                      //will initiate a post request to specified url and fetch result from that
                 type: "POST",
-                url: "/student/register-student",         //loads and executes the javaScript file associated with this route.
+                url: "/register-student",         //loads and executes the javaScript file associated with this route.
                 dataType: 'JSON',
                 data: data,
                 success: function success(result) {
                     console.log(result);
-                    window.location.href = '/student/student-login';
+                    window.alert('Student Registered Successfully')
+                    window.location.href = '/student-login';
                 },
                 error: function error(error) {
                     console.log('hgfyf', error)
+                    window.alert('Some error occured, please try again')
                     // window.alert(error.responseJSON.data.errors[0].message);
                 }
             })

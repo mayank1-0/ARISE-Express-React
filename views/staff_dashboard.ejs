@@ -20,10 +20,10 @@
     <p id="designation"></p><br>
     <label>Date Of Joining </label>
     <p id="date_of_joining"></p><br>
-    <a href="">Admission</a>
-    <a href="">Update Profile</a>
-    <a href="">Change Password</a>
-    <a href="">Logout</a>
+    <a href="/admission">Admissions</a>
+    <a href="/staff/update-profile">Update Profile</a>
+    <a href="/staff/staff-change-password">Change Password</a>
+    <a href="/staff/staff-logout">Logout</a>
 
     <script>
         $(() => {
@@ -55,10 +55,6 @@
                     // $('.custom-container').noty({text: error.responseText.message});
                 }
             })
-        }
-        function admission() {
-            window.alert("Admission button clicked")
-            window.location.href = "/student/admissions"
         }
     </script>
 </body>
