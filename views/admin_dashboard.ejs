@@ -30,22 +30,23 @@
         $(() => {
         })
 
-        function fetchStaffDetails() {
-            $.ajax({
-                type: "POST",
-                url: "/staff/fetch-staff-details",
-                success: function success(result) {
-                    console.log(result);
-                    window.alert("Staff details fetched successfully");
-                },
-                error: function error(error) {
-                    console.log(error, 'error');
-                }
-            })
-        }
+        // function fetchStaffDetails() {
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "/staff/fetch-staff-details",
+        //         success: function success(result) {
+        //             console.log(result);
+        //             window.alert("Staff details fetched successfully");
+        //         },
+        //         error: function error(error) {
+        //             console.log(error, 'error');
+        //         }
+        //     })
+        // }
         function admission() {
             window.alert("Admission button clicked")
-            window.location.href = "/admission"
+            //Don't use below code.. instead use, $.ajax bcz we wish to use set-request-header and thus use auth middleware
+            // window.location.href = "/admission"
         }
 
     </script>

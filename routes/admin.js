@@ -12,7 +12,7 @@ router.get('/admin-login', isLoggedInAdmin, admin_login)
 router.post('/login-admin', login_admin);
 router.get('/admin-dashboard', checkLogInAdmin, admin_dashboard)
 router.get('/admin-change-password', checkLogInAdmin, admin_change_password)
-router.put('/change-password-admin', checkLogInAdmin, change_password_admin)
+router.put('/change-password-admin', auth, change_password_admin)
 router.get('/admin-logout', admin_logout)
 
 module.exports = router;

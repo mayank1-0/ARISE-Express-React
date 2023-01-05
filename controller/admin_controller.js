@@ -57,6 +57,8 @@ const login_admin = async (req, res) => {
           { expiresIn: "10h" }
         );
         let sessionData = req.session;
+        sessionData.user = {}
+        sessionData.user.name = admin_credentials.username
         sessionData.token = token;
         res.status(200).send({ token: token, message: "Login Successfull" });
       }

@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
         res.redirect("/admin/admin-login");
       }
     } catch (error) {
-      console.log("cccc");
+      console.log("cccc", error);
       res.redirect("/admin/admin-login");
     }
   };

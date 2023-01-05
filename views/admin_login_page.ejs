@@ -20,6 +20,7 @@
                 dataType: 'JSON',
                 data: data,
                 success: function success(result) {
+                    window.localStorage.setItem('token', result.token)
                     window.alert('Login Successful')
                     window.location.href = '/admin/admin-dashboard';
                 },
