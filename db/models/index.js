@@ -9,7 +9,7 @@ const Admin_Model = require('./Admin.model')
 
 // connecting with mysql database
 
-const sequelize = new Sequelize(username, password, database, {
+const sequelize = new Sequelize(database, username, password, {
     host: host,
     dialect: dialect
 });
