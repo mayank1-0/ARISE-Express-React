@@ -54,7 +54,7 @@ const login_admin = async (req, res) => {
         const token = jwt.sign(
           { username: admin_credentials.username, isActive: true },
           config.jwtSecret,
-          { expiresIn: "10h" }
+          { expiresIn: "30m" }
         );
         let sessionData = req.session;
         sessionData.user = {}

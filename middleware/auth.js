@@ -15,7 +15,7 @@ module.exports = (req, res, next) => {
       throw 'Invalid token';
     }
     }else if(!req.session.token) {
-      console.log('##########TOKEN VERIFIED. API ACCESS VIA REST CLIENT########');
+      console.log('##########TOKEN VERIFIED. API ACCESS VIA REST CLIENT i.e POSTMAN,etc########');
       const decodedToken = jwt.verify(token, config.jwtSecret);
       const tokenStatus = decodedToken.isActive;
       if (tokenStatus) {

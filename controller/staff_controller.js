@@ -66,6 +66,8 @@ const login_staff = async (req, res) => {
           { expiresIn: "1h" }
         );
         let sessionData = req.session;
+        sessionData.user = {}
+        sessionData.user.name = staff_credentials.username
         sessionData.token = token;
         res.status(200).send({ token: token, message: "Login Successfull" });
       }
@@ -112,8 +114,14 @@ const question_answer_login = (req, res) => {
   res.render("question_answer_login");
 };
 
-const login_question_answer = (req, res) => {
+const login_question_answer = async (req, res) => {
   const faculty_login = req.body;
+  // const Staff_Details = db.Staff_Details_Model;
+  //   let staff_credentials = await Staff_Details.findOne({
+  //     plain: true,
+  //     where: { center: staff_data.center, username: staff_data.username,  },
+  //     attributes: ["employment_number", "username", ["password", "hashedPass"]],
+  //   });
   if (
     faculty_login.faculty_id == "arise123" &&
     faculty_login.password == "arise123"
@@ -125,7 +133,8 @@ const login_question_answer = (req, res) => {
       { expiresIn: "1h" }
     ); //if matches then creates a jwt token.
     let sessionData = req.session; // from where does req.session takes data ????????????????????
-    sessionData.user = { name: "admin" };
+    sessionData.user = {};
+    sessionData.user.name = "faculty"
     sessionData.token = token;
     res.status(200).send({
       status: 200,
