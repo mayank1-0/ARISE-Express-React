@@ -26,16 +26,18 @@
     <a href="/staff/staff-logout">Logout</a>
 
     <script>
+        var token;
         $(() => {
+            token = window.localStorage.getItem('token');
             fetchStaffDetails()
         })
         function fetchStaffDetails() {
             $.ajax({
                 type: "POST",
                 url: "/staff/fetch-staff-details",
-                // beforeSend: function (xhr) {
-                //     xhr.setRequestHeader("Authorization", "Bearer " + token);
-                // },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
                 success: function success(result) {
                     console.log(result);
                     result = result.data;

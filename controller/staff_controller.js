@@ -500,7 +500,7 @@ const profile_update = async (req, res) => {
       },
       {
         where: { employment_number: employmentNumber },
-        individualHooks: true,
+        // individualHooks: true,
       }
     );
     res.status(200).send({ status: 200, data: result, message: "Information updated successfully"})

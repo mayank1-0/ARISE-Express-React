@@ -124,7 +124,7 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
         },
         beforeUpdate(user, options) {
           //function called before updating a table.
-          // console.log(user.toJSON().password);
+          console.log('9999999999999999', user.toJSON().password);
           if (user.toJSON().password) {
             return bcrypt
               .hash(user.toJSON().password, 10)
