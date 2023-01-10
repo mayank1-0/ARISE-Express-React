@@ -3,6 +3,8 @@ const Student_Registration_Model = (Sequelize, sequelize) => {
     // Model attributes are defined here
     enrolment_number: {
       type: Sequelize.STRING,
+      allowNull: false,
+      unique: true
     },
     centre_code: {
       type: Sequelize.STRING,
@@ -10,11 +12,12 @@ const Student_Registration_Model = (Sequelize, sequelize) => {
     },
     registration_number: {
       type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
+      primaryKey: true
     },
     Student_Name: {
       type: Sequelize.STRING,
-      allowNull: false,
-      unique: true
     },
     Father_Name: {
       type: Sequelize.STRING,

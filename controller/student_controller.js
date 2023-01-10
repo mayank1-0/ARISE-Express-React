@@ -41,11 +41,19 @@ const login_student = async (req, res) => {
   }
 };
 
+const exam = (req, res) => {
+  res.render("exam");
+};
 
+const add_exam = (req, res) => {
+  res.render("add_exam");
+};
 
 module.exports = {
   registration_form,
   register_student,
   student_login,
-  login_student
+  login_student,
+  exam,
+  add_exam
 };

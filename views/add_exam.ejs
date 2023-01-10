@@ -1,0 +1,49 @@
+<body>
+    <h2> Add Exam</h2>
+    <label>Enrollment Number</label>
+    <input id="enrollment_number"></input><br>
+    <label>Student Registration Number</label>
+    <input id="student_registration_number"></input><br>
+    <label>Student Name</label>
+    <input id="student_name"></input><br>
+    <label>Exam Date</label>
+    <input id="exam_date"></input><br>
+    <label>Course</label>
+    <input id="course"></input><br>
+    <label>Module</label>
+    <input id="module"></input><br>
+    <button onclick="add_exam()">Add</button>
+    <button onclick="cancel()">Cancel</button>
+    
+    
+    <script>
+        var token = window.localStorage.getItem('token')
+        function add_exam() {
+            var data = {
+                enrollment_number: $('#enrollment_number').val(),
+                student_registration_number: $('#student_registration_number').val(),
+                student_name: $('#student_name').val(),
+                exam_date: $('#exam_date').val(),
+                course: $('#course').val(),
+                module: $('#module').val()
+            }
+            $.ajax({
+                type: "POST",
+                url: "/staff/profile-update",
+                data: data,
+                dataType: 'JSON',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                success: function success(result) {
+                    console.log(result);
+                    window.location.href="/staff/staff-dashboard"
+                },
+                error: function error(error) {
+                    console.log(error, 'error');
+                    // $('.custom-container').noty({text: error.responseText.message});
+                }
+            })
+        }
+    </script>
+</body>
