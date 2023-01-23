@@ -2,7 +2,7 @@
     <br><br>
     <h1> STAFF</h1>
     <a href="/admin/add-staff">add-staff</a>
-    <a href="">update-staff</a>
+    <a href="/admin/update-staff_1">update-staff-status</a>
     <a href="">search</a>
     <a href="/admin/admin-dashboard">dashboard</a><br>
     <label>Type</label>
@@ -15,6 +15,7 @@
         <thead>
             <tr>
                 <th>Empl. No.</th>
+                <th>Center</th>
                 <th>Employee Name</th>
                 <th>Type</th>
                 <th>Designation</th>
@@ -44,7 +45,7 @@
                     result = result.data;
                     var tr = '';
                     result.map((i) => {
-                        tr += '<tr><td>' + i.employment_number + '</td><td>' + i.Employee_Name + '</td><td>' + i.type + '</td><td>' + i.designation + '</td><td>' + i.Date_of_joining + '</td><td>' + i.status + '</td>';
+                        tr += '<tr><td>' + i.employment_number + '</td><td>' + i.center + '</td><td>' + i.Employee_Name + '</td><td>' + i.type + '</td><td>' + i.designation + '</td><td>' + i.Date_of_joining + '</td><td>' + i.status + '</td>';
                     });
                     $("#tr").html(tr);    //.html() is like .innerHTML  
                 },

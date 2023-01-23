@@ -98,6 +98,25 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         default: true
+      },
+      Promotion_date: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        default: null,
+        // validate: {
+        //   isDate: true,
+        // },
+      },
+      Date_of_job_leave: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        default: null,
+        // validate: {
+        //   isDate: true,
+        // },
+      },
+      Reason: {
+        type: Sequelize.STRING
       }
     },
 

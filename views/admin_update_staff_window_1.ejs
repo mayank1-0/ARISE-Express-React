@@ -1,0 +1,50 @@
+<body>
+    <h2>Update Staff Status</h2>
+    <form id="form" action="/admin/update-staff_2" method="get">
+        <label for="employment_number">Enter Employment Number</label><br>
+        <input type="text" id="employment_number" placeholder="employment_number" name="employment_number" /><br><br>
+        <input type="button" value="Submit" onclick="next()" />
+    </form>
+    <script>
+        $(() => {
+            notSubmitOnEnter()
+        })
+        function notSubmitOnEnter() {
+            $("#employment_number").on("keydown", function (e) {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                }
+            });
+        }
+        function next() {
+            const token = window.localStorage.getItem('token');
+            console.log('++++ ', token);
+            var data = { employment_number: $("#employment_number").val() }
+            console.log('----', data.employment_number);
+            if (!data.employment_number) {
+                alert('Please enter a Employment Number')
+            }
+            else {
+                $.ajax({                      //will initiate a post request to specified url and fetch result from that
+                    type: "POST",
+                    url: "/admin/check-employment-number",         //loads and executes the javaScript file associated with this route.
+                    dataType: 'JSON',
+                    data: data,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    },
+                    success: function success(result) {
+                        console.log(result);
+                        window.alert('Found the employee')
+                        $("#form").submit();
+                    },
+                    error: function error(error) {
+                        window.alert('No such employee with the given employment number exists')
+                        console.log(error)
+                        // window.alert(error.responseJSON.data.errors[0].message);
+                    }
+                })
+            }
+        }      
+    </script>
+</body>

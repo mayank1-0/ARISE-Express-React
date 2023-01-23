@@ -168,5 +168,70 @@ const add_staff = async (req, res) => {
   }
 };
 
+const update_staff_window_1 = (req, res) => {
+  res.render("admin_update_staff_window_1")
+}
 
-module.exports = { admin, admin_login, login_admin, admin_dashboard, admin_change_password, change_password_admin, admin_logout, staff_window, fetch_all_staff_details, add_staff_window, add_staff };
+const update_staff_window_2 = (req, res) => {
+  res.render("admin_update_staff_window_2")
+}
+
+const check_employment_number = async (req,res) => {
+  try {
+    const data = req.body;
+    const employment_number = data.employment_number;
+    console.log("..... ", employment_number);
+    const Staff_Details = db.Staff_Details_Model;
+    const result = await Staff_Details.findOne({
+      where: { employment_number: employment_number },
+    });
+    if (result === null) {
+      res.status(404).send({
+        status: 404,
+        message: "No such employee with the given employment_number exists",
+      });
+    } else {
+      res.status(200).send({
+        status: 200,
+        data: result,
+        message: "Successfully fetched employee details",
+      });
+    }
+  } catch (error) {
+    res.status(500).send({ data: error, message: "Something went wrong" });
+  }
+}
+
+const update_staff_status = async (req, res) => {
+  try {
+    var data = req.body;
+    const Staff_Details = db.Staff_Details_Model
+    const result = await Staff_Details.update({ Promotion_date: data.Promotion_date, designation: data.designation, Date_of_job_leave: data.Date_of_job_leave, Reason: data.Reason, status: data.status }, {where: { employment_number: data.employment_number }, individualHooks: true})
+    res.status(200).send({status: 200, data: result, message: "Updated staff status successfully"})
+  } catch (error) {
+    res.status(500).send({status: 500, data: error, message: "Something went wrong"})
+  }
+}
+
+const fetchStaffDetails = async (req, res) => {
+  try {
+    var data = req.body
+    var employmentNumber = data.employment_number
+    const Staff_Details = db.Staff_Details_Model;
+    const result = await Staff_Details.findOne({
+      where: { employment_number: employmentNumber },
+    });
+    res.status(200).send({
+      status: 200,
+      data: result,
+      message: "Details fetched successfully",
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ status: 500, data: error, message: "Something went wrong" });
+  }
+};
+
+
+module.exports = { admin, admin_login, login_admin, admin_dashboard, admin_change_password, change_password_admin, admin_logout, staff_window, fetch_all_staff_details, add_staff_window, add_staff, update_staff_window_1, update_staff_window_2, update_staff_status, check_employment_number, fetchStaffDetails };

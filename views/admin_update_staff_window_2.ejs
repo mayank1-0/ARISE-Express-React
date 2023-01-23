@@ -1,0 +1,103 @@
+<body>
+    <h2>Update Staff Status</h2>
+    <label>Empl. No.</label>
+    <p id="epml_no"></p><br>
+    <label>Center</label>
+    <p id="center"></p><br>
+    <label>Type</label>
+    <p id="type"></p><br>
+    <label>Designation</label>
+    <p id="designation"></p><br>
+    <label>Date of Joining</label>
+    <p id="doj"></p><br>
+    <label>Empl. Name</label>
+    <p id="empl_name"></p><br>
+    <label>Father's Name</label>
+    <p id="father_name"></p><br>
+    <label>Promotion Date</label>
+    <input id="promotion_date" placeholder="e.x- 12-21-2022"></input><br><br>
+    <label>New Designation</label>
+    <input id="new_designation" placeholder="upper-staff"></input><br><br>
+    <label>Date of job leave</label>
+    <input id="date_of_job_leave" placeholder="e.x- 12-21-2022"></input><br><br>
+    <label>Reason</label>
+    <input id="reason" placeholder="Other priorities"></input><br><br>
+    <button onclick="update()">Update</button>
+    <button onclick="cancel()">Cancel</button>
+
+
+    <script>
+        $(() => {
+            fetch_Staff_Details()
+        })
+        var token = window.localStorage.getItem('token');
+        function fetch_Staff_Details() {
+            const params = new URLSearchParams(window.location.search);
+            const employmentNumber = params.get("employment_number");
+            var data = {
+                employment_number: employmentNumber
+            }
+            $.ajax({
+                type: "POST",
+                url: "/admin/fetch-staff-details",
+                data: data,
+                dataType: 'JSON',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                success: function success(result) {
+                    result = result.data;
+                    console.log('/////', result);
+                    $("p")[0].innerHTML = result.employment_number,
+                    $("p")[1].innerHTML = result.center,
+                    $("p")[2].innerHTML = result.type,
+                    $("p")[3].innerHTML = result.designation,
+                    $("p")[4].innerHTML = result.Date_of_joining,
+                    $("p")[5].innerHTML = result.Employee_Name,
+                    $("p")[6].innerHTML = result.Father_Name
+                },
+                error: function error(error) {
+                    console.log(error, 'error');
+                }
+            })
+        }
+        function update() {
+            const params = new URLSearchParams(window.location.search);
+            const employmentNumber = params.get("employment_number");
+            var data = {
+                employment_number: employmentNumber,
+                Promotion_date: $('#promotion_date').val(),
+                New_designation: $('#new_designation').val(),
+                Date_of_job_leave: $('#date_of_job_leave').val(),
+                Reason: $('#reason').val()
+            }
+            if( data.Date_of_job_leave && data.Reason ){
+                data.status = 0
+            }
+            if( data.Promotion_date && data.New_designation ){
+                data.designation = data.New_designation
+                data.status = 1
+            }
+            $.ajax({
+                type: "PUT",
+                url: "/admin/update-staff-status",
+                data: data,
+                dataType: 'JSON',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                success: function success(result) {
+                    console.log(result);
+                    window.location.href = "/admin/staff-window"
+                },
+                error: function error(error) {
+                    console.log(error, 'error');
+                    // $('.custom-container').noty({text: error.responseText.message});
+                }
+            })
+        }
+        function cancel() {
+            window.location.href = "/admin/staff-window";
+        }
+    </script>
+</body>
