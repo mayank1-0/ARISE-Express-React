@@ -1,0 +1,57 @@
+<body>
+    <br><br>
+    <h1> STAFF</h1>
+    <a href="/admin/add-staff">add-staff</a>
+    <a href="">update-staff</a>
+    <a href="">search</a>
+    <a href="/admin/admin-dashboard">dashboard</a><br>
+    <label>Type</label>
+    <input id="id1"></input>&nbsp;
+    <label>Status</label>
+    <input id="id2"></input>
+    <button onclick="search()">Search</button>
+    <button onclick="clear()">Clear</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Empl. No.</th>
+                <th>Employee Name</th>
+                <th>Type</th>
+                <th>Designation</th>
+                <th>DOJ</th>
+                <th>Login Status</th>
+            </tr>
+        </thead>
+        <tbody id="tr">
+        </tbody>
+    </table>
+    <script>
+        var token = '';
+        $(() => {
+            token = window.localStorage.getItem('token');
+            console.log(token);
+            all_staff_details();
+        });
+        function all_staff_details() {
+            $.ajax({
+                type: "POST",
+                url: "/admin/fetch-all-staff-details",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                success: function success(result) {
+                    console.log(result);
+                    result = result.data;
+                    var tr = '';
+                    result.map((i) => {
+                        tr += '<tr><td>' + i.employment_number + '</td><td>' + i.Employee_Name + '</td><td>' + i.type + '</td><td>' + i.designation + '</td><td>' + i.Date_of_joining + '</td><td>' + i.status + '</td>';
+                    });
+                    $("#tr").html(tr);    //.html() is like .innerHTML  
+                },
+                error: function error(error) {
+                    console.log(error, 'error');
+                }
+            })
+        }
+    </script>
+</body>

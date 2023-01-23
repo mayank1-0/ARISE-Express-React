@@ -1,33 +1,9 @@
 const jwt = require("jsonwebtoken");
-const randomstring = require("randomstring");
-const moment = require("moment");
 const db = require("../db/models/index");
 const config = require("../config.json");
 const fs = require("fs");
 const csv = require("fast-csv");
 const bcrypt = require("bcrypt");
-
-const add_staff = async (req, res) => {
-  try {
-    const staff_data = req.body;
-    const Staff_Details = db.Staff_Details_Model;
-    staff_data.employment_number = `${moment().unix()}-${randomstring.generate({
-      //Generating random string. randomstring is a package used to generate a random string.To make it unique we have attached time stamp to it, moment().unix() is the current timestamp generated in milliseconds.
-      length: 6,
-      readable: true,
-      capitalization: "uppercase",
-      charset: "alphanumeric",
-    })}`;
-    const result = await Staff_Details.create(staff_data);
-    res
-      .status(200)
-      .send({ status: 200, data: result, message: "Staff added successfully" });
-  } catch (error) {
-    res
-      .status(500)
-      .send({ status: 500, data: result, message: "Something went wrong" });
-  }
-};
 
 const staff_login = (req, res) => {
   res.render("staff_login");
@@ -66,8 +42,8 @@ const login_staff = async (req, res) => {
           { expiresIn: "1h" }
         );
         let sessionData = req.session;
-        sessionData.user = {}
-        sessionData.user.name = staff_credentials.username
+        sessionData.user = {};
+        sessionData.user.name = staff_credentials.username;
         sessionData.token = token;
         res.status(200).send({ token: token, message: "Login Successfull" });
       }
@@ -134,7 +110,7 @@ const login_question_answer = async (req, res) => {
     ); //if matches then creates a jwt token.
     let sessionData = req.session; // from where does req.session takes data ????????????????????
     sessionData.user = {};
-    sessionData.user.name = "faculty"
+    sessionData.user.name = "faculty";
     sessionData.token = token;
     res.status(200).send({
       status: 200,
@@ -496,16 +472,24 @@ const profile_update = async (req, res) => {
         Sex: new_details.sex,
         Marital_status: new_details.marital_status,
         Contact_number: new_details.contact_number,
-        email: new_details.email_id
+        email: new_details.email_id,
       },
       {
         where: { employment_number: employmentNumber },
         // individualHooks: true,
       }
     );
-    res.status(200).send({ status: 200, data: result, message: "Information updated successfully"})
+    res
+      .status(200)
+      .send({
+        status: 200,
+        data: result,
+        message: "Information updated successfully",
+      });
   } catch (error) {
-    res.status(500).send({ status: 500, data: error, message: "Something went wrong"})
+    res
+      .status(500)
+      .send({ status: 500, data: error, message: "Something went wrong" });
   }
 };
 
@@ -585,8 +569,58 @@ const staff_logout = async (req, res) => {
   }
 };
 
+const exam = (req, res) => {
+  res.render("exam");
+};
+
+const add_exam = (req, res) => {
+  res.render("add_exam");
+};
+
+const add_exam_db = async (req, res) => {
+  try {
+    const Exam = db.Exam_Model;
+    var exam_data = req.body;
+    console.log("11111111111111111111", exam_data);
+    const result = await Exam.create(exam_data);
+    if (result) {
+      console.log("Added exam");
+      res.send({
+        status: 200,
+        data: result,
+        message: "Exam added successfully",
+      });
+    } else {
+      res.send({
+        status: 500,
+        data: result,
+        message: "Exam not added. Please try again",
+      });
+    }
+  } catch (error) {
+    res.status(500).send({ data: error, message: "Something went wrong" });
+  }
+};
+
+const fetchAllExamDetails = async (req, res) => {
+  try {
+    const Exam = db.Exam_Model;
+    const result = await Exam.findAll();
+    res
+      .status(200)
+      .send({
+        status: 200,
+        data: result,
+        message: "exam details fetched successfully",
+      });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ status: 500, data: error, message: "Something went wrong" });
+  }
+};
+
 module.exports = {
-  add_staff,
   staff_login,
   login_staff,
   staff_dashboard,
@@ -611,4 +645,8 @@ module.exports = {
   staff_change_password,
   change_password_staff,
   staff_logout,
+  exam,
+  add_exam,
+  add_exam_db,
+  fetchAllExamDetails,
 };

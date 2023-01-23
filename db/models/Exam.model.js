@@ -11,18 +11,30 @@ const Exam_Model = (Sequelize, sequelize) => {
       Course: {
         type: Sequelize.STRING,
         allowNull: false,
-        validate: {
-          notEmpty: true
-        }
+        // validate: {
+        //   notEmpty: true
+        // }
+      },
+      Module: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        // validate: {
+        //   notEmpty: true
+        // }
       },
       Batch: {
         type: Sequelize.STRING,
       },
       Date: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          isDate: true,
+        },
       },
       Exam: {
-        type: Sequelize.STRING,
+        type: Sequelize.BLOB,
+        allowNull: false
       },
       Marks: {
         type: Sequelize.INTEGER

@@ -72,17 +72,11 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
       },
       Educational_qualification: {
         type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
+        allowNull: false
       },
       Professional_qualification: {
         type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
+        allowNull: false
       },
       Photograph: {
         type: Sequelize.BLOB,
@@ -100,6 +94,11 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      status: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        default: true
+      }
     },
 
     {

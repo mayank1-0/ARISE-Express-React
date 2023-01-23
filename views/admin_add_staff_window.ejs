@@ -1,0 +1,98 @@
+<body>
+    <h2>Add Staff</h2>
+    <!-- <label>Empl. No.</label>
+    <input id="epml_no"></input><br> -->
+    <label>Center</label>
+    <input id="center" placeholder="center-1"></input><br>
+    <label>Type</label>
+    <input id="type" placeholder="teaching/non-teaching"></input><br>
+    <label>Designation</label>
+    <input id="designation" placeholder="teacher/staff"></input><br>
+    <label>Date of Joining</label>
+    <input id="doj" placeholder="12-21-2000"></input><br>
+    <label>Empl. Name</label>
+    <input id="empl_name" placeholder="Raman"></input><br>
+    <label>Father's Name</label>
+    <input id="father_name" placeholder="Chaman"></input><br>
+    <label>Date of Birth</label>
+    <input id="dob" placeholder="12-21-2022"></input><br>
+    <label>Sex</label>
+    <input id="sex" placeholder="male/female/transgender"></input><br>
+    <label>Marital_Status</label>
+    <input id="marital_status" placeholder="single/married"></input><br>
+    <label>Contact_Number</label>
+    <input id="contact_number" placeholder="0000000000"></input><br>
+    <label>E-Mail Id</label>
+    <input id="email_id" placeholder="a@a.com"></input><br>
+    <label>Current Address</label>
+    <input id="current_address" placeholder="221-B"></input><br>
+    <label>Village_Sector</label>
+    <input id="village_sector" placeholder="Baker's Street"></input><br>
+    <label>Educational Qualification</label>
+    <input id="edu_qualification" placeholder="graduate"></input><br>
+    <label>Professional Qualification</label>
+    <input id="prof_qualification" placeholder="graduate"></input><br>
+    <label>Aadhar Card Number</label>
+    <input id="aadhar_number" placeholder="0000-0000-0000-0000"></input><br>
+    <!-- <label>Photo</label>
+    <input id="photo" placeholder="center-1"></input><br> -->
+    <label>Username</label>
+    <input id="username" placeholder="abc"></input><br>
+    <label>Password</label>
+    <input id="password" placeholder="abc"></input><br>
+    <label>Status</label>
+    <input id="status" placeholder="0/1"></input><br>
+    <button onclick="add()">Add</button>
+    <button onclick="cancel()">Cancel</button>
+    
+    
+    <script>
+        var token = window.localStorage.getItem('token')
+        function add() {
+            var data = {
+                // Enrollment_number: $('#enrollment_number').val(),
+                // employment_number: $('#epml_no').val(),
+                center: $('#center').val(),
+                type: $('#type').val(),
+                designation: $('#designation').val(),
+                Employee_Name: $('#empl_name').val(),
+                Father_Name: $('#father_name').val(),
+                Date_of_joining: $('#doj').val(),
+                Date_of_Birth: $('#dob').val(),
+                Marital_status: $('#marital_status').val(),
+                Sex: $('#sex').val(),
+                Current_Address: $('#current_address').val(),
+                Sector_Village_Colony: $('#village_sector').val(),
+                Contact_number: $('#contact_number').val(),
+                email: $('#email_id').val(),
+                Educational_qualification: $('#edu_qualification').val(),
+                Professional_qualification: $('#prof_qualification').val(),
+                Photograph: $('#photo').val(),
+                Adhar_card_number_scan_copy: $('#aadhar_number').val(),
+                username: $('#username').val(),
+                password: $('#password').val(),
+                status: $('#status').val()
+            }
+            $.ajax({
+                type: "POST",
+                url: "/admin/add-staff",
+                data: data,
+                dataType: 'JSON',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                success: function success(result) {
+                    console.log(result);
+                    window.location.href="/admin/staff-window"
+                },
+                error: function error(error) {
+                    console.log(error, 'error');
+                    // $('.custom-container').noty({text: error.responseText.message});
+                }
+            })
+        }
+        function cancel(){
+            window.location.href="/admin/staff-window";
+        }
+    </script>
+</body>

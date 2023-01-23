@@ -1,0 +1,56 @@
+<body>
+    <br><br>
+    <h1> SAMPLE 1</h1>
+    <a href="">link1</a>
+    <a href="">link2</a>
+    <a href="">link3</a><br>
+    <label>Label1</label>
+    <input id="id1"></input>&nbsp;
+    <label>Label2</label>
+    <input id="id2"></input>
+    <button onclick="func1()">Button1</button>
+    <button onclick="func2()">Button2</button>
+    <table>
+        <thead>
+        <tr>
+            <th>field1</th>
+            <th>field2</th>
+            <th>field3</th>
+            <th>field4</th>
+            <th>field5</th>
+            <th>field6</th>
+        </tr>
+        </thead>
+        <tbody id="tr">
+        </tbody>
+    </table>
+    <script>
+        var token = '';
+        $(() => {
+          token = window.localStorage.getItem('token');
+          // console.log(token);
+          //func0();
+        });
+        function func0() {
+          $.ajax({
+            type: "POST",
+            url: "",
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader("Authorization", "Bearer " + token);
+            },
+            success: function success(result) {
+              console.log(result);
+              result = result.data;
+              var tr = '';
+              result.map((i) => {
+                tr += '<tr><td>' + i.course_name + '</td><td>' + i.course_code + '</td><td>' + i.module + '</td><td>' + i.topic + '</td><td>' + i.questionId + '</td><td>' + i.question + '</td><td>' + i.option1 + '</td><td>' + i.option2 + '</td><td>' + i.option3 + '</td><td>' + i.option4 + '</td><td>' + i.answer + '</td>';
+              });
+              $("#tr").html(tr);    //.html() is like .innerHTML  
+            },
+            error: function error(error) {
+              console.log(error, 'error');
+            }
+          })
+        }
+      </script>
+</body>

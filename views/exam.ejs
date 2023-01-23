@@ -1,6 +1,6 @@
 <body>
     <h1> Exam </h1>
-    <a href="/add-exam"> Add Exam </a> <br>
+    <a href="/staff/add-exam"> Add Exam </a> <br>
     <!-- <form method="get" action="/">
         <input type="radio" id="MDFAT" name="course" value="Master_Diploma_in_Financial_Accounting_and_Taxation">
         <label for="MDFAT">Master Diploma in Financial Accounting and Taxation</label><br>
@@ -32,6 +32,7 @@
     <!-- </form> -->
 
 <table>
+  <thead>
   <tr>
     <th>Exam Date</th>
     <th>Stu. Reg. No.</th>
@@ -40,13 +41,37 @@
     <th>Module</th>
     <th>View/Edit Exam</th>
   </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
+  </thead>
+  <tbody id="tr">
+  </tbody>
 </table>
+<script>
+  var token = '';
+  $(() => {
+    token = window.localStorage.getItem('token');
+    console.log(token);
+    all_exam_details();
+  });
+  function all_exam_details() {
+    $.ajax({
+      type: "POST",
+      url: "/staff/fetch-all-exam-details",
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + token);
+      },
+      success: function success(result) {
+        console.log(result);
+        result = result.data;
+        var tr = '';
+        result.map((i) => {
+          tr += '<tr><td>' + i.Date + '</td><td>' + i.registration_number + '</td><td>' + i.Student_Name + '</td><td>' + i.Course + '</td><td>' + i.Module + '</td><td><a href=' + i.Exam +  '>' + i.Exam + '</a></td>';
+        });
+        $("#tr").html(tr);    //.html() is like .innerHTML  
+      },
+      error: function error(error) {
+        console.log(error, 'error');
+      }
+    })
+  }
+</script>
 </body>

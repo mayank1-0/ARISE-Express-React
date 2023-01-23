@@ -1,34 +1,31 @@
 <body>
-    <h2> Add Exam</h2>
-    <!-- <label>Enrollment Number</label>
-    <input id="enrollment_number"></input><br> -->
-    <label>Student Registration Number</label>
-    <input id="student_registration_number"></input><br>
-    <label>Student Name</label>
-    <input id="student_name"></input><br>
-    <label>Exam Date</label>
-    <input id="exam_date"></input><br>
-    <label>Course</label>
-    <input id="course"></input><br>
-    <label>Module</label>
-    <input id="module"></input><br>
-    <label>Exam</label>
-    <input type="file" id="exam"></input><br>
-    <button onclick="add_exam()">Add</button>
-    <button onclick="cancel()">Cancel</button>
+    <h2>Sample 2</h2>
+    <label>L1</label>
+    <input id="id1"></input><br>
+    <label>L2</label>
+    <input id="id2"></input><br>
+    <label>L3</label>
+    <input id="id3"></input><br>
+    <label>L4</label>
+    <input id="id4"></input><br>
+    <label>L5</label>
+    <input id="id5"></input><br>
+    <label>L6</label>
+    <input id="id6"></input><br>
+    <button onclick="func1()">Button1</button>
+    <button onclick="func2()">Button2</button>
     
     
     <script>
         var token = window.localStorage.getItem('token')
-        function add_exam() {
+        function func1() {
             var data = {
                 // Enrollment_number: $('#enrollment_number').val(),
                 registration_number: $('#student_registration_number').val(),
-                Student_Name: $('#student_name').val(),
+                Student_name: $('#student_name').val(),
                 Date: $('#exam_date').val(),
                 Course: $('#course').val(),
-                Module: $('#module').val(),
-                Exam: $('#exam').val()
+                Module: $('#module').val()
             }
             $.ajax({
                 type: "POST",
@@ -48,7 +45,7 @@
                 }
             })
         }
-        function cancel(){
+        function func2(){
             window.location.reload();
         }
     </script>

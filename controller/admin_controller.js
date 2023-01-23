@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config.json");
 const bcrypt = require("bcrypt");
+const moment = require("moment");
+const randomstring = require("randomstring");
+
 
 const db = require("../db/models/index");
 
@@ -116,4 +119,54 @@ const admin_logout = async (req, res) => {
   }
 }
 
-module.exports = { admin, admin_login, login_admin, admin_dashboard, admin_change_password, change_password_admin, admin_logout };
+const staff_window = (req, res) => {
+  res.render('admin_staff_window')
+}
+
+const fetch_all_staff_details = async (req, res) => {
+  try {
+    const Staff_Details = db.Staff_Details_Model;
+    const result = await Staff_Details.findAll();
+    res.status(200).send({
+      status: 200,
+      data: result,
+      message: "Details fetched successfully",
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ status: 500, data: error, message: "Something went wrong" });
+  }
+}
+
+const add_staff_window = (req, res) => {
+  res.render('admin_add_staff_window')
+}
+
+const add_staff = async (req, res) => {
+  try {
+    var staff_data = req.body;
+    console.log('1111');
+    const Staff_Details = db.Staff_Details_Model;
+    console.log('2222');
+    staff_data.employment_number = `${moment().unix()}-${randomstring.generate({
+      //Generating random string. randomstring is a package used to generate a random string.To make it unique we have attached time stamp to it, moment().unix() is the current timestamp generated in milliseconds.
+      length: 6,
+      readable: true,
+      capitalization: "uppercase",
+      charset: "alphanumeric",
+    })}`;
+    console.log('3333', staff_data);
+    const result = await Staff_Details.create(staff_data);
+    res
+      .status(200)
+      .send({ status: 200, data: result, message: "Staff added successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ status: 500, data: error, message: "Something went wrong" });
+  }
+};
+
+
+module.exports = { admin, admin_login, login_admin, admin_dashboard, admin_change_password, change_password_admin, admin_logout, staff_window, fetch_all_staff_details, add_staff_window, add_staff };

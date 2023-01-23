@@ -39,14 +39,15 @@ app.use(function(req, res, next) {
 app.use('/', studentRouter);
 app.use('/admin', adminRouter);
 app.use('/staff', staffRouter);
-
+app.get('/sample1', (req, res) => res.render('sample1'))
+app.get('/sample2', (req, res) => res.render('sample2'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-db.sequelize.sync({ force: true })
+db.sequelize.sync()
 
 // error handler
 app.use(function(err, req, res, next) {
