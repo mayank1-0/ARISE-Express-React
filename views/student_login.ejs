@@ -1,13 +1,13 @@
 <body>
     <h1>Student Login</h1>
     <br>
-    <input type="text" id="enrolment_number" placeholder="enrolment_number"><br><br>
+    <input type="text" id="enrollment_number" placeholder="enrollment_number"><br><br>
     <input type="password" id="password" placeholder="password"><br><br>
     <button type="button" onclick="login()">LOGIN</button>
     <script>
         function login() {
             var data = {
-                enrolment_number: $("#enrolment_number").val(),
+                enrollment_number: $("#enrollment_number").val(),
                 password: $("#password").val(),
             }
         console.log(data);

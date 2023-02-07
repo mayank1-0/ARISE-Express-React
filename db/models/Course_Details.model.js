@@ -5,8 +5,20 @@ const Course_Details_Model = (Sequelize, sequelize) => {
         type: Sequelize.STRING,
         // allowNull defaults to true
       },
-      course_name: {
+      course: {
         type: Sequelize.STRING,
+        allowNull: false
+      },
+      module: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        // validate: {
+        //   notEmpty: true
+        // }
+      },
+      sub_module: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       duration: {
         type: Sequelize.INTEGER,

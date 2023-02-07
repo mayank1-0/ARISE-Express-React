@@ -1,12 +1,12 @@
 const Student_Registration_Model = (Sequelize, sequelize) => {
   const Student_Registration = sequelize.define("Student_Registration", {
     // Model attributes are defined here
-    enrolment_number: {
+    enrollment_number: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true
     },
-    centre_code: {
+    center_code: {
       type: Sequelize.STRING,
       // allowNull defaults to true
     },
@@ -83,6 +83,12 @@ const Student_Registration_Model = (Sequelize, sequelize) => {
       type: Sequelize.BIGINT,
       allowNull: false,
     },
+    Email_ID: {
+      type: Sequelize.STRING,
+      validate: {
+        isEmail: true
+      }
+    },
     Highest_educational_qualification: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -90,18 +96,15 @@ const Student_Registration_Model = (Sequelize, sequelize) => {
         notEmpty: true
       }
     },
-    Course_name: {
+    course: {
       type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true
-      }
+      allowNull: false
     },
     Duration: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
-    Course_code: {
+    course_code: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {

@@ -61,11 +61,8 @@ const fetchStaffDetails = async (req, res) => {
   try {
     var sessionData = req.session;
     var token = sessionData.token;
-    console.log("1111", token);
     var decodedToken = jwt.verify(token, config.jwtSecret);
-    console.log("2222", decodedToken);
     const employmentNumber = decodedToken.employment_number;
-    console.log("3333", employmentNumber);
     const Staff_Details = db.Staff_Details_Model;
     const result = await Staff_Details.findOne({
       where: { employment_number: employmentNumber },
@@ -479,13 +476,11 @@ const profile_update = async (req, res) => {
         // individualHooks: true,
       }
     );
-    res
-      .status(200)
-      .send({
-        status: 200,
-        data: result,
-        message: "Information updated successfully",
-      });
+    res.status(200).send({
+      status: 200,
+      data: result,
+      message: "Information updated successfully",
+    });
   } catch (error) {
     res
       .status(500)
@@ -580,21 +575,32 @@ const add_exam = (req, res) => {
 const add_exam_db = async (req, res) => {
   try {
     const Exam = db.Exam_Model;
-    var exam_data = req.body;
+    const Question_Answer = db.Question_Answer_Model;
+    var exam_data;
+    exam_data = {
+      registration_number: req.body.registration_number,
+      Student_Name: req.body.Student_Name,
+      Date: req.body.Date,
+      Course: req.body.Course,
+      Module: req.body.Module,
+    };
+    var question_answer_data = req.body.Exam;
+    const result1 = await Question_Answer.create(question_answer_data);
+
     console.log("11111111111111111111", exam_data);
     const result = await Exam.create(exam_data);
-    if (result) {
-      console.log("Added exam");
+    if (result && result1) {
+      console.log("Added exam and questions");
       res.send({
         status: 200,
-        data: result,
-        message: "Exam added successfully",
+        data: [result, result1],
+        message: "Exam and question-answers added successfully",
       });
     } else {
       res.send({
         status: 500,
         data: result,
-        message: "Exam not added. Please try again",
+        message: "Exam and question-answers not added successfully. Please try again",
       });
     }
   } catch (error) {
@@ -606,13 +612,11 @@ const fetchAllExamDetails = async (req, res) => {
   try {
     const Exam = db.Exam_Model;
     const result = await Exam.findAll();
-    res
-      .status(200)
-      .send({
-        status: 200,
-        data: result,
-        message: "exam details fetched successfully",
-      });
+    res.status(200).send({
+      status: 200,
+      data: result,
+      message: "exam details fetched successfully",
+    });
   } catch (error) {
     res
       .status(500)

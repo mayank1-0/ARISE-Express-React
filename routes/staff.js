@@ -8,8 +8,8 @@ const upload = require("../middleware/upload");
 const { staff_login, login_staff, staff_dashboard, fetchStaffDetails, question_answer_login, question_answers_choose, login_question_answer, question_answer_form, question_answer_form_2, add_question_answer, edit_question_answer_form_1, edit_question_answer_form_2, edit_question_answer, check_question_id, delete_question_answer, uploadCsvFile, question_answers, view_question_answers, update_profile, profile_update, staff_change_password, change_password_staff, staff_logout, admissions, exam, add_exam, add_exam_db, fetchAllExamDetails} = require('../controller/staff_controller');
 const checkLogInStaff = require('../middleware/checkLogInStaff');
 
-// all the staff related routes
- //
+// staff related routes
+
 router.get('/staff-login', isLoggedInStaff, staff_login) //
 router.post('/login-staff', login_staff) //
 router.get('/staff-dashboard', checkLogInStaff, staff_dashboard) //
@@ -19,6 +19,9 @@ router.put('/profile-update', auth, profile_update) //
 router.get('/staff-change-password', checkLogInStaff, staff_change_password) //
 router.put('/change-password-staff', auth, change_password_staff) //
 router.get('/staff-logout', staff_logout) //
+
+// adding question-answers route
+
 router.get('/question-answer-login', isLoggedIn, question_answer_login) //<--
 router.post('/login-question-answer', login_question_answer) //<--
 router.get('/question-answer-choose', checkLogIn, question_answers_choose) //<--
@@ -33,6 +36,9 @@ router.post('/checkQuestionId', auth, check_question_id)
 router.delete('/delete-question-answer/:questionId', auth, delete_question_answer)
 router.get('/question-answers', checkLogIn, question_answers);
 router.post('/view-question-answers', auth, view_question_answers)
+
+// single admissions api and exam related apis
+
 router.get('/admission', admissions)
 router.get('/exam', exam)
 router.post('/fetch-all-exam-details', fetchAllExamDetails)

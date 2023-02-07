@@ -8,7 +8,7 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
       employment_number: {
         type: Sequelize.STRING,
       },
-      center: {
+      centre: {
         type: Sequelize.STRING,
       },
       type: {

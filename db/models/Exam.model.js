@@ -8,14 +8,14 @@ const Exam_Model = (Sequelize, sequelize) => {
       Student_Name: {
         type: Sequelize.STRING,
       },
-      Course: {
+      course: {
         type: Sequelize.STRING,
         allowNull: false,
         // validate: {
         //   notEmpty: true
         // }
       },
-      Module: {
+      module: {
         type: Sequelize.STRING,
         allowNull: false,
         // validate: {
@@ -33,8 +33,7 @@ const Exam_Model = (Sequelize, sequelize) => {
         },
       },
       Exam: {
-        type: Sequelize.BLOB,
-        allowNull: false
+        type: Sequelize.STRING,
       },
       Marks: {
         type: Sequelize.INTEGER
