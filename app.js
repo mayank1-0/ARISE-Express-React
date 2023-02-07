@@ -39,6 +39,10 @@ app.use(function (req, res, next) {
   next();
 });
 
+const swaggerUi = require("swagger-ui-express"),
+  swaggerDocument = require("./swagger.json");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 require("./routes")(app);
 
 // catch 404 and forward to error handler

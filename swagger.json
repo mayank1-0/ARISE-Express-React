@@ -1,0 +1,49 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Arise HRMS",
+    "version": "1.0",
+    "description": "Arise HRMS Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [{ "url": "http://localhost:8080/api/v1" }],
+  "tags": [
+    {
+      "name": "Student",
+      "description": "API for users in the system"
+    },
+    {
+      "name": "Main Admin",
+      "description": "API for users in the system"
+    },
+    {
+      "name": "Staff",
+      "description": "API for users in the system"
+    },
+    {
+      "name": "Faculty",
+      "description": "API for users in the system"
+    },
+    {
+      "name": "Center Admin",
+      "description": "API for users in the system"
+    }
+  ],
+
+  "paths": {
+    "/student/health-check": {
+      "get": {
+        "tags": ["Student"],
+        "summary": "Health Check for Admin Routes",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
