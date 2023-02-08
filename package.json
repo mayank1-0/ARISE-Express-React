@@ -26,6 +26,7 @@
     "mysql2": "^2.3.3",
     "randomstring": "^1.2.3",
     "sequelize": "^6.28.0",
+    "swagger-jsdoc": "5.0.1",
     "swagger-ui-express": "^4.6.0"
   },
   "devDependencies": {
