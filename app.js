@@ -9,31 +9,8 @@ const db = require("./db/models/index");
 const session = require("express-session");
 global.__basedir = __dirname + "/ARISE1/..";
 const swaggerJSDoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express"),
-
- swaggerDefinition = {
-  openapi: '3.0.0',
-  info: {
-    title: 'ARISE',
-    version: '1.0.0',
-    description:
-      'List of all APIs.',
-    license: {
-      name: 'Licensed Under MIT',
-      url: 'https://spdx.org/licenses/MIT.html',
-    },
-    contact: {
-      name: 'JSONPlaceholder',
-      url: 'https://jsonplaceholder.typicode.com',
-    },
-  },
-  servers: [
-    {
-      url: 'http://localhost:3000/api/v1',
-      description: 'Development server',
-    },
-  ],
-};
+const swaggerUi = require("swagger-ui-express");
+const swaggerDefinition = require("./swagger.json");
 
 const options = {
   swaggerDefinition,
