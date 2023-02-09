@@ -500,14 +500,14 @@ const change_password_staff = async (req, res) => {
       !password_data.password ||
       !password_data.confirmPassword
     ) {
-      res.status(500).send({
-        status: 500,
+      res.status(401).send({
+        status: 401,
         message: "Fill all password fields",
         data: "Fill all passwords",
       });
     } else if (password_data.password !== password_data.confirmPassword) {
-      res.status(500).send({
-        status: 500,
+      res.status(401).send({
+        status: 401,
         message: "Please enter same newPassword and confirmNewPassword",
         data: "new password and confirm new passwords aren't same",
       });
