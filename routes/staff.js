@@ -10,6 +10,14 @@ const checkLogInStaff = require("../middleware/checkLogInStaff");
 
 // staff related routes
 
+/**
+ * @swagger
+ * /staff/health-check:
+ *   get:
+ *     tags:
+ *       - staff
+ */
+
 router.get("/health-check", (req, res) => {
   console.log("Heath Check");
   try {
@@ -18,26 +26,107 @@ router.get("/health-check", (req, res) => {
     console.log(e);
   }
 });
+
+/**
+ * @swagger
+ * /staff/staff-login:
+ *   get:
+ *     tags:
+ *       - staff
+ */
+
 router.get("/staff-login", isLoggedInStaff, StaffController.staff_login); //
+
+/**
+ * @swagger
+ * /staff/login-staff:
+ *   post:
+ *     tags:
+ *       - staff
+ */
+
 router.post("/login-staff", StaffController.login_staff); //
+
+/**
+ * @swagger
+ * /staff/staff-dashboard:
+ *   get:
+ *     tags:
+ *       - staff
+ */
+
 router.get(
   "/staff-dashboard",
   checkLogInStaff,
   StaffController.staff_dashboard
 ); //
+
+/**
+ * @swagger
+ * /staff/fetch-staff-details:
+ *   post:
+ *     tags:
+ *       - staff
+ */
+
 router.post("/fetch-staff-details", auth, StaffController.fetchStaffDetails); //
+
+/**
+ * @swagger
+ * /staff/update-profile:
+ *   get:
+ *     tags:
+ *       - staff
+ */
+
 router.get("/update-profile", checkLogInStaff, StaffController.update_profile); //
+
+/**
+ * @swagger
+ * /staff/profile-update:
+ *   put:
+ *     tags:
+ *       - staff
+ */
+
 router.put("/profile-update", auth, StaffController.profile_update); //
+
+/**
+ * @swagger
+ * /staff/staff-change-password:
+ *   get:
+ *     tags:
+ *       - staff
+ */
+
 router.get(
   "/staff-change-password",
   checkLogInStaff,
   StaffController.staff_change_password
 ); //
+
+/**
+ * @swagger
+ * /staff/change-password-staff:
+ *   put:
+ *     tags:
+ *       - staff
+ */
+
 router.put(
   "/change-password-staff",
   auth,
   StaffController.change_password_staff
 ); //
+
+/**
+ * @swagger
+ * /staff/staff-logout:
+ *   get:
+ *     tags:
+ *       - staff
+ */
+
 router.get("/staff-logout", StaffController.staff_logout); //
 
 // adding question-answers route
@@ -64,11 +153,21 @@ router.get(
   StaffController.question_answer_form_2
 ); //<--
 router.post("/add-question-answer", auth, StaffController.add_question_answer); //<--
+
+/**
+ * @swagger
+ * /staff/upload-csv-file:
+ *   post:
+ *     tags:
+ *       - staff
+ */
+
 router.post(
   "/upload-csv-file",
   upload.single("file"),
   StaffController.uploadCsvFile
 ); //<--
+
 router.get(
   "/edit-question-answer-1",
   checkLogIn,
@@ -95,10 +194,54 @@ router.post(
 
 // single admissions api and exam related apis
 
+/**
+ * @swagger
+ * /staff/admissions:
+ *   get:
+ *     tags:
+ *       - staff
+ */
+
 router.get("/admission", StaffController.admissions);
+
+/**
+ * @swagger
+ * /staff/exam:
+ *   get:
+ *     tags:
+ *       - staff
+ */
+
 router.get("/exam", StaffController.exam);
+
+/**
+ * @swagger
+ * /staff/fetch-all-exam-details:
+ *   post:
+ *     tags:
+ *       - staff
+ */
+
 router.post("/fetch-all-exam-details", StaffController.fetchAllExamDetails);
+
+/**
+ * @swagger
+ * /staff/add-exam:
+ *   get:
+ *     tags:
+ *       - staff
+ */
+
 router.get("/add-exam", StaffController.add_exam);
+
+/**
+ * @swagger
+ * /staff/add-exam:
+ *   post:
+ *     tags:
+ *       - staff
+ */
+
 router.post("/add-exam", StaffController.add_exam_db);
 
 module.exports = router;

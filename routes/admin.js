@@ -12,6 +12,8 @@ const AdminController = require("../controller/admin_controller");
  * @swagger
  * /admin/health-check:
  *   get:
+ *     tags:
+ *       - admin
  */
 router.get("/health-check", (req, res) => {
   console.log("Heath Check");
@@ -26,6 +28,8 @@ router.get("/health-check", (req, res) => {
  * @swagger
  * /admin/create-admin:
  *   post:
+ *     tags:
+ *       - admin
  */
 router.post("/create-admin", AdminController.admin);
 
@@ -33,6 +37,8 @@ router.post("/create-admin", AdminController.admin);
  * @swagger
  * /admin/admin-login:
  *   get:
+ *     tags:
+ *       - admin
  */
 
 router.get("/admin-login", isLoggedInAdmin, AdminController.admin_login);
@@ -41,6 +47,8 @@ router.get("/admin-login", isLoggedInAdmin, AdminController.admin_login);
  * @swagger
  * /admin/login-admin:
  *   post:
+ *     tags:
+ *       - admin
  */
 
 router.post("/login-admin", AdminController.login_admin);
@@ -49,6 +57,8 @@ router.post("/login-admin", AdminController.login_admin);
  * @swagger
  * /admin/admin-dashboard:
  *   get:
+ *     tags:
+ *       - admin
  */
 
 router.get(
@@ -61,6 +71,8 @@ router.get(
  * @swagger
  * /admin/admin-change-password:
  *   get:
+ *     tags:
+ *       - admin
  */
 
 router.get(
@@ -73,6 +85,8 @@ router.get(
  * @swagger
  * /admin/change-password-admin:
  *   put:
+ *     tags:
+ *       - admin
  */
 
 router.put(
@@ -85,6 +99,8 @@ router.put(
  * @swagger
  * /admin/admin-logout:
  *   get:
+ *     tags:
+ *       - admin
  */
 
 router.get("/admin-logout", AdminController.admin_logout);
@@ -95,6 +111,8 @@ router.get("/admin-logout", AdminController.admin_logout);
  * @swagger
  * /admin/staff-window:
  *   get:
+ *     tags:
+ *       - admin
  */
 
 router.get("/staff-window", checkLogInAdmin, AdminController.staff_window);
@@ -103,6 +121,8 @@ router.get("/staff-window", checkLogInAdmin, AdminController.staff_window);
  * @swagger
  * /admin/fetch-all-staff-details:
  *   post:
+ *     tags:
+ *       - admin
  */
 
 router.post(
@@ -115,6 +135,8 @@ router.post(
  * @swagger
  * /admin/add-staff:
  *   get:
+ *     tags:
+ *       - admin
  */
 
 router.get("/add-staff", checkLogInAdmin, AdminController.add_staff_window);
@@ -123,6 +145,8 @@ router.get("/add-staff", checkLogInAdmin, AdminController.add_staff_window);
  * @swagger
  * /admin/add-staff:
  *   post:
+ *     tags:
+ *       - admin
  */
 
 router.post("/add-staff", auth, AdminController.add_staff);
@@ -131,6 +155,8 @@ router.post("/add-staff", auth, AdminController.add_staff);
  * @swagger
  * /admin/update-staff_1:
  *   get:
+ *     tags:
+ *       - admin
  */
 
 router.get(
@@ -143,6 +169,8 @@ router.get(
  * @swagger
  * /admin/update-staff_2:
  *   get:
+ *     tags:
+ *       - admin
  */
 
 router.get(
@@ -155,6 +183,8 @@ router.get(
  * @swagger
  * /admin/update-staff-status:
  *   put:
+ *     tags:
+ *       - admin
  */
 
 router.put("/update-staff-status", auth, AdminController.update_staff_status);
@@ -163,6 +193,8 @@ router.put("/update-staff-status", auth, AdminController.update_staff_status);
  * @swagger
  * /admin/check-employment-number:
  *   post:
+ *     tags:
+ *       - admin
  */
 
 router.post(
@@ -175,6 +207,8 @@ router.post(
  * @swagger
  * /admin/fetch-staff-details:
  *   post:
+ *     tags:
+ *       - admin
  */
 
 router.post("/fetch-staff-details", auth, AdminController.fetchStaffDetails);
