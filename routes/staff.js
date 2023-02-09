@@ -40,6 +40,25 @@ router.get("/staff-login", isLoggedInStaff, StaffController.staff_login); //
  *   post:
  *     tags:
  *       - staff
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               center:
+ *                 type: string
+ *                 description: Employee's associated center name.
+ *                 example: canter-1
+ *               username:
+ *                 type: string
+ *                 description: Employee's username.
+ *                 example: Hagrid
+ *               password:
+ *                 type: string
+ *                 description: Employee's account password.
+ *                 example: Rubius 
  *     responses:
  *       200:
  *         description: Logged in successfully.
@@ -84,6 +103,37 @@ router.get("/update-profile", checkLogInStaff, StaffController.update_profile); 
  *   put:
  *     tags:
  *       - staff
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               staff_name:
+ *                 type: string
+ *                 description: Staff's name.
+ *                 example: Anna
+ *               father_name:
+ *                 type: string
+ *                 description: Employee's father's name.
+ *                 example: Hagrid
+ *               sex:
+ *                 type: string
+ *                 description: Employee's gender.
+ *                 example: female
+ *               marital_status:
+ *                 type: string
+ *                 description: Employee's marital status.
+ *                 example: un-married
+ *               contact_number:
+ *                 type: string
+ *                 description: Employee's contact number.
+ *                 example: 9999999999
+ *               email_id:
+ *                 type: string
+ *                 description: Employee's email-id.
+ *                 example: m@m.com
  *     responses:
  *       200:
  *         description: Profile updated successfully.
@@ -107,6 +157,25 @@ router.get(
  *   put:
  *     tags:
  *       - staff
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               oldPassword:
+ *                 type: string
+ *                 description: Staff account's old password .
+ *                 example: 123abc
+ *               password:
+ *                 type: string
+ *                 description: Staff account's new password .
+ *                 example: 123abcdef
+ *               confirmPassword:
+ *                 type: string
+ *                 description: Staff account's new password .
+ *                 example: 123abcdef
  *     responses:
  *       200:
  *         description: Staff password changed successfully.
@@ -237,6 +306,37 @@ router.get("/add-exam", StaffController.add_exam);
  *   post:
  *     tags:
  *       - staff
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               registration_number:
+ *                 type: string
+ *                 description: Student's registration number who's gonna take the exam .
+ *                 example: 1111
+ *               Student_Name:
+ *                 type: string
+ *                 description: Student's name who's gonna take the exam .
+ *                 example: Hermionie
+ *               Date:
+ *                 type: string
+ *                 description: Student's exam's date .
+ *                 example: 1-1-2023
+ *               Course:
+ *                 type: string
+ *                 description: Student's exam's course .
+ *                 example: Office Automation
+ *               Module:
+ *                 type: string
+ *                 description: Student's exam's course's module .
+ *                 example: Business Accounting
+ *               Exam:
+ *                 type: string
+ *                 description: Student's exam's name.
+ *                 example: Business Accounting
  *     responses:
  *       200:
  *         description: Added exam and questions successfully.
