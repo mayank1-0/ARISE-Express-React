@@ -10,6 +10,17 @@ const checkLogInStaff = require("../middleware/checkLogInStaff");
 
 // staff related routes
 
+/**
+ * @swagger
+ * /staff/health-check:
+ *   get:
+ *     tags:
+ *       - staff
+ *     responses:
+ *       200:
+ *         description: Created admin successfully.
+ */
+
 router.get("/health-check", (req, res) => {
   console.log("Heath Check");
   try {
@@ -18,26 +29,107 @@ router.get("/health-check", (req, res) => {
     console.log(e);
   }
 });
+
+
+
 router.get("/staff-login", isLoggedInStaff, StaffController.staff_login); //
+
+/**
+ * @swagger
+ * /staff/login-staff:
+ *   post:
+ *     tags:
+ *       - staff
+ *     responses:
+ *       200:
+ *         description: Logged in successfully.
+ *       401:
+ *         description: User not found || Invalid password
+ *       500:
+ *         description: Something went wrong
+ */
+
 router.post("/login-staff", StaffController.login_staff); //
+
+
+
 router.get(
   "/staff-dashboard",
   checkLogInStaff,
   StaffController.staff_dashboard
 ); //
+
+/**
+ * @swagger
+ * /staff/fetch-staff-details:
+ *   post:
+ *     tags:
+ *       - staff
+ *     responses:
+ *       200:
+ *         description: Fetched staff details successfully.
+ *       500:
+ *         description: Something went wrong
+ */
+
 router.post("/fetch-staff-details", auth, StaffController.fetchStaffDetails); //
+
+
+
 router.get("/update-profile", checkLogInStaff, StaffController.update_profile); //
+
+/**
+ * @swagger
+ * /staff/profile-update:
+ *   put:
+ *     tags:
+ *       - staff
+ *     responses:
+ *       200:
+ *         description: Profile updated successfully.
+ *       500:
+ *         description: Something went wrong
+ */
+
 router.put("/profile-update", auth, StaffController.profile_update); //
+
+
+
 router.get(
   "/staff-change-password",
   checkLogInStaff,
   StaffController.staff_change_password
 ); //
+
+/**
+ * @swagger
+ * /staff/change-password-staff:
+ *   put:
+ *     tags:
+ *       - staff
+ *     responses:
+ *       200:
+ *         description: Staff password changed successfully.
+ *       401:
+ *         description: Fill all password fields || enter same new password and confirm new password || Incorrect old password
+ *       500:
+ *         description: Something went wrong
+ */
+
 router.put(
   "/change-password-staff",
   auth,
   StaffController.change_password_staff
 ); //
+
+/**
+ * @swagger
+ * /staff/staff-logout:
+ *   get:
+ *     tags:
+ *       - staff
+ */
+
 router.get("/staff-logout", StaffController.staff_logout); //
 
 // adding question-answers route
@@ -64,11 +156,28 @@ router.get(
   StaffController.question_answer_form_2
 ); //<--
 router.post("/add-question-answer", auth, StaffController.add_question_answer); //<--
+
+/**
+ * @swagger
+ * /staff/upload-csv-file:
+ *   post:
+ *     tags:
+ *       - staff
+ *     responses:
+ *       200:
+ *         description: Uploaded the file successfully.
+ *       400:
+ *         description: Upload a csv file
+ *       500:
+ *         description: Failed to import data into database || Could not upload the file.
+ */
+
 router.post(
   "/upload-csv-file",
   upload.single("file"),
   StaffController.uploadCsvFile
 ); //<--
+
 router.get(
   "/edit-question-answer-1",
   checkLogIn,
@@ -95,10 +204,46 @@ router.post(
 
 // single admissions api and exam related apis
 
+
+
 router.get("/admission", StaffController.admissions);
+
+
+
 router.get("/exam", StaffController.exam);
+
+/**
+ * @swagger
+ * /staff/fetch-all-exam-details:
+ *   post:
+ *     tags:
+ *       - staff
+ *     responses:
+ *       200:
+ *         description: Exam details fetched successfully.
+ *       500:
+ *         description: Something went wrong
+ */
+
 router.post("/fetch-all-exam-details", StaffController.fetchAllExamDetails);
+
+
+
 router.get("/add-exam", StaffController.add_exam);
+
+/**
+ * @swagger
+ * /staff/add-exam:
+ *   post:
+ *     tags:
+ *       - staff
+ *     responses:
+ *       200:
+ *         description: Added exam and questions successfully.
+ *       500:
+ *         description: Exam and question/answers not added successfully. Something went wrong
+ */
+
 router.post("/add-exam", StaffController.add_exam_db);
 
 module.exports = router;

@@ -8,6 +8,40 @@ const expressLayouts = require("express-ejs-layouts");
 const db = require("./db/models/index");
 const session = require("express-session");
 global.__basedir = __dirname + "/ARISE1/..";
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express"),
+
+ swaggerDefinition = {
+  openapi: '3.0.0',
+  info: {
+    title: 'ARISE',
+    version: '1.0.0',
+    description:
+      'List of all APIs.',
+    license: {
+      name: 'Licensed Under MIT',
+      url: 'https://spdx.org/licenses/MIT.html',
+    },
+    contact: {
+      name: 'JSONPlaceholder',
+      url: 'https://jsonplaceholder.typicode.com',
+    },
+  },
+  servers: [
+    {
+      url: 'http://localhost:3000/api/v1',
+      description: 'Development server',
+    },
+  ],
+};
+
+const options = {
+  swaggerDefinition,
+  // Paths to files containing OpenAPI definitions
+  apis: ["./routes/*.js"],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
 
 require("dotenv").config();
 
@@ -39,11 +73,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-const swaggerUi = require("swagger-ui-express"),
-  swaggerDocument = require("./swagger.json");
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 require("./routes")(app);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
