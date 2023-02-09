@@ -19,13 +19,7 @@ router.get("/health-check", (req, res) => {
 
 // student registration, login and related routes/apis
 
-/**
- * @swagger
- * /student/registration-form:
- *   get:
- *     tags:
- *       - student
- */
+
 
 router.get("/registration-form", StudentControllers.registration_form);
 
@@ -35,17 +29,16 @@ router.get("/registration-form", StudentControllers.registration_form);
  *   post:
  *     tags:
  *       - student
+ *     responses:
+ *       200:
+ *         description: Successfully registered student.
+ *       500:
+ *         description: Something went wrong
  */
 
 router.post("/register-student", StudentControllers.register_student);
 
-/**
- * @swagger
- * /student/student-login:
- *   get:
- *     tags:
- *       - student
- */
+
 
 router.get("/student-login", StudentControllers.student_login);
 
@@ -55,6 +48,13 @@ router.get("/student-login", StudentControllers.student_login);
  *   post:
  *     tags:
  *       - student
+ *     responses:
+ *       200:
+ *         description: Login successfully.
+ *       401:
+ *         description: Invalid credentials
+ *       500:
+ *         description: Something went wrong
  */
 
 router.post("/login-student", StudentControllers.login_student);
@@ -65,6 +65,11 @@ router.post("/login-student", StudentControllers.login_student);
  *   post:
  *     tags:
  *       - student
+ *     responses:
+ *       200:
+ *         description: Details fetched successfully.
+ *       500:
+ *         description: Something went wrong
  */
 
 router.post(
@@ -78,6 +83,11 @@ router.post(
  *   put:
  *     tags:
  *       - student
+ *     responses:
+ *       200:
+ *         description: Information updated successfully.
+ *       500:
+ *         description: Something went wrong
  */
 
 router.put(

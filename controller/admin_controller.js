@@ -83,10 +83,10 @@ const change_password_admin = async (req, res) => {
   try {
     var password_data = req.body
     if( !password_data.oldPassword || !password_data.password || !password_data.confirmPassword){
-      res.status(500).send({ status: 500, message: 'Fill all password fields', data: 'Fill all passwords'})
+      res.status(500).send({ status: 401, message: 'Fill all password fields', data: 'Fill all passwords'})
     }
     else if( password_data.password !== password_data.confirmPassword){
-      res.status(500).send({ status: 500, message: 'Please enter same newPassword and confirmNewPassword', data: 'new password and confirm new passwords aren\'t same'})
+      res.status(500).send({ status: 401, message: 'Please enter same newPassword and confirmNewPassword', data: 'new password and confirm new passwords aren\'t same'})
     }
     else{
       const Admin = db.Admin_Model

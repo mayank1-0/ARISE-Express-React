@@ -14,6 +14,9 @@ const AdminController = require("../controller/admin_controller");
  *   get:
  *     tags:
  *       - admin
+ *     responses:
+ *       200:
+ *         description: Ok.
  */
 router.get("/health-check", (req, res) => {
   console.log("Heath Check");
@@ -30,16 +33,15 @@ router.get("/health-check", (req, res) => {
  *   post:
  *     tags:
  *       - admin
+ *     responses:
+ *       200:
+ *         description: Created admin successfully.
+ *       500:
+ *         description: Something went wrong
  */
 router.post("/create-admin", AdminController.admin);
 
-/**
- * @swagger
- * /admin/admin-login:
- *   get:
- *     tags:
- *       - admin
- */
+
 
 router.get("/admin-login", isLoggedInAdmin, AdminController.admin_login);
 
@@ -49,17 +51,18 @@ router.get("/admin-login", isLoggedInAdmin, AdminController.admin_login);
  *   post:
  *     tags:
  *       - admin
+ *     responses:
+ *       200:
+ *         description: Admin log-in successful.
+ *       401:
+ *         description: User not found. Please try again
+ *       500:
+ *         description: Something went wrong
  */
 
 router.post("/login-admin", AdminController.login_admin);
 
-/**
- * @swagger
- * /admin/admin-dashboard:
- *   get:
- *     tags:
- *       - admin
- */
+
 
 router.get(
   "/admin-dashboard",
@@ -67,13 +70,7 @@ router.get(
   AdminController.admin_dashboard
 );
 
-/**
- * @swagger
- * /admin/admin-change-password:
- *   get:
- *     tags:
- *       - admin
- */
+
 
 router.get(
   "/admin-change-password",
@@ -87,6 +84,13 @@ router.get(
  *   put:
  *     tags:
  *       - admin
+ *     responses:
+ *       200:
+ *         description: Admin changed password successfully.
+ *       401:
+ *         description: Fill all password fields || enter same new password and confirm new password || Incorrect old password
+ *       500:
+ *         description: Something went wrong
  */
 
 router.put(
@@ -95,25 +99,13 @@ router.put(
   AdminController.change_password_admin
 );
 
-/**
- * @swagger
- * /admin/admin-logout:
- *   get:
- *     tags:
- *       - admin
- */
+
 
 router.get("/admin-logout", AdminController.admin_logout);
 
 // admin creating/updating staff related apis
 
-/**
- * @swagger
- * /admin/staff-window:
- *   get:
- *     tags:
- *       - admin
- */
+
 
 router.get("/staff-window", checkLogInAdmin, AdminController.staff_window);
 
@@ -123,6 +115,11 @@ router.get("/staff-window", checkLogInAdmin, AdminController.staff_window);
  *   post:
  *     tags:
  *       - admin
+ *     responses:
+ *       200:
+ *         description: All staff details fetched successfully.
+ *       500:
+ *         description: Something went wrong
  */
 
 router.post(
@@ -131,13 +128,7 @@ router.post(
   AdminController.fetch_all_staff_details
 );
 
-/**
- * @swagger
- * /admin/add-staff:
- *   get:
- *     tags:
- *       - admin
- */
+
 
 router.get("/add-staff", checkLogInAdmin, AdminController.add_staff_window);
 
@@ -147,17 +138,16 @@ router.get("/add-staff", checkLogInAdmin, AdminController.add_staff_window);
  *   post:
  *     tags:
  *       - admin
+ *     responses:
+ *       200:
+ *         description: Staff added successfully.
+ *       500:
+ *         description: Something went wrong
  */
 
 router.post("/add-staff", auth, AdminController.add_staff);
 
-/**
- * @swagger
- * /admin/update-staff_1:
- *   get:
- *     tags:
- *       - admin
- */
+
 
 router.get(
   "/update-staff_1",
@@ -165,13 +155,7 @@ router.get(
   AdminController.update_staff_window_1
 );
 
-/**
- * @swagger
- * /admin/update-staff_2:
- *   get:
- *     tags:
- *       - admin
- */
+
 
 router.get(
   "/update-staff_2",
@@ -185,6 +169,11 @@ router.get(
  *   put:
  *     tags:
  *       - admin
+ *     responses:
+ *       200:
+ *         description: Staff status updated successfully.
+ *       500:
+ *         description: Something went wrong
  */
 
 router.put("/update-staff-status", auth, AdminController.update_staff_status);
@@ -195,6 +184,13 @@ router.put("/update-staff-status", auth, AdminController.update_staff_status);
  *   post:
  *     tags:
  *       - admin
+ *     responses:
+ *       200:
+ *         description: Successfully fetched employee details.
+ *       404:
+ *         description: No such employee with given employment number exist
+ *       500:
+ *         description: Something went wrong
  */
 
 router.post(
@@ -209,6 +205,11 @@ router.post(
  *   post:
  *     tags:
  *       - admin
+ *     responses:
+ *       200:
+ *         description: Fetched staff details successfully.
+ *       500:
+ *         description: Something went wrong
  */
 
 router.post("/fetch-staff-details", auth, AdminController.fetchStaffDetails);
