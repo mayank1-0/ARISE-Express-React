@@ -83,7 +83,7 @@ const Student_Registration_Model = (Sequelize, sequelize) => {
       type: Sequelize.BIGINT,
       allowNull: false,
     },
-    Email_ID: {
+    email_id: {
       type: Sequelize.STRING,
       validate: {
         isEmail: true

@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const db = require("../db/models/index");
 const config = require("../config.json");
+const bcrypt = require("bcrypt");
 const fs = require("fs");
 const csv = require("fast-csv");
-const bcrypt = require("bcrypt");
 
 const staff_login = (req, res) => {
   res.render("staff_login");

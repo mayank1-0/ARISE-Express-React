@@ -10,6 +10,14 @@ const Admin_Model = (Sequelize, sequelize) => {
           notEmpty: true,
         },
       },
+      email_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+            isEmail: true
+        }
+      },
       password: {
         type: Sequelize.STRING,
         allowNull: false,
