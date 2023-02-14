@@ -64,7 +64,7 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
         type: Sequelize.BIGINT,
         allowNull: false,
       },
-      email: {
+      email_id: {
         type: Sequelize.STRING,
         validate: {
           isEmail: true,

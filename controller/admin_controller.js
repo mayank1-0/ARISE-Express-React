@@ -11,6 +11,7 @@ const admin = async (req, res) => {
   try {
     const admin_credentials = {
       username: "admin",
+      email_id: "admin@admin.com",
       password: "admin",
     };
     const Admin = db.Admin_Model;
