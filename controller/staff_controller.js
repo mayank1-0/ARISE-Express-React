@@ -79,6 +79,39 @@ const fetchStaffDetails = async (req, res) => {
   }
 };
 
+// const fetchAllStaffDetails = async (req, res) => {
+//   try {
+//     const Staff_Details = db.Staff_Details_Model;
+//     const result = await Staff_Details.findAll();
+//     const resultData = { employment_number: result.employment_number, Employee_Name: result.Employee_Name, Type: result.type, Designation: result.designation, DOJ: result.Date_of_joining, Login_Status: result.isActive }
+//     res.status(200).send({
+//       status: 200,
+//       data: resultData,
+//       message: "Details fetched successfully",
+//     });
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .send({ status: 500, data: error, message: "Something went wrong" });
+//   }
+// };
+
+// const add_staff = async (req, res) => {
+//   try {
+//     var staff_data = req.body;
+//     const Staff_Details = db.Staff_Details_Model;
+//     console.log('3333', staff_data);
+//     const result = await Staff_Details.create(staff_data);
+//     res
+//       .status(200)
+//       .send({ status: 200, data: result, message: "Staff added successfully" });
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .send({ status: 500, data: error, message: "Something went wrong" });
+//   }
+// };
+
 const admissions = (req, res) => {
   res.render("admissions");
 };

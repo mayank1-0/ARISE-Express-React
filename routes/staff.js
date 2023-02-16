@@ -93,7 +93,11 @@ router.get(
 
 router.post("/fetch-staff-details", auth, StaffController.fetchStaffDetails); //
 
+// router.get("/fetch-all-staff-details", auth, StaffController.fetchAllStaffDetails); //
 
+// router.post("/add-staff", StaffController.add_staff)
+
+// router.put("/update-staff-status", StaffController.update_staff_status)
 
 router.get("/update-profile", checkLogInStaff, StaffController.update_profile); //
 

@@ -88,6 +88,14 @@ const Centres_Model = (Sequelize, sequelize) => {
         validate: {
             notEmpty: true
         }
+      },
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        default: true,
+        validate: {
+            notEmpty: true
+        }
       }
     });
     return Centres

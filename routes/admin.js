@@ -42,8 +42,6 @@ router.get("/health-check", (req, res) => {
  */
 router.post("/create-admin", AdminController.admin);
 
-
-
 router.get("/admin-login", isLoggedInAdmin, AdminController.admin_login);
 
 /**
@@ -78,15 +76,11 @@ router.get("/admin-login", isLoggedInAdmin, AdminController.admin_login);
 
 router.post("/login-admin", AdminController.login_admin);
 
-
-
 router.get(
   "/admin-dashboard",
   checkLogInAdmin,
   AdminController.admin_dashboard
 );
-
-
 
 router.get(
   "/admin-change-password",
@@ -134,20 +128,180 @@ router.put(
   AdminController.change_password_admin
 );
 
-
-
 router.get("/admin-logout", AdminController.admin_logout);
 
+// centre related apis
+
+/**
+ * @swagger
+ * /admin/fetch-all-centre-details:
+ *   get:
+ *     tags:
+ *       - admin
+ *     responses:
+ *       200:
+ *         description: All centre details fetched successfully.
+ *       500:
+ *         description: Something went wrong
+ */
+
+router.get(
+  "/fetch-all-centre-details",
+  AdminController.fetch_all_centre_details
+);
+
+/**
+ * @swagger
+ * /admin/add-centre:
+ *   post:
+ *     tags:
+ *       - admin
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               centre_code:
+ *                 type: string
+ *                 description: centre-code.
+ *                 example: c1
+ *               centre_name:
+ *                 type: string
+ *                 description: centre-name
+ *                 example: Arise centre 1
+ *               centre_head_name:
+ *                 type: string
+ *                 description: centre head name
+ *                 example: Nimrita
+ *               centre_contact_number:
+ *                 type: integer
+ *                 description: Centre's contact number
+ *                 example: 0129-444444
+ *               centre_address:
+ *                 type: string
+ *                 description: Address of centre
+ *                 example: 221B Baker's street
+ *               centre_start_date:
+ *                 type: string
+ *                 description: Date of centre's creation
+ *                 example: 1-1-2022
+ *               centre_valid_upto:
+ *                 type: string
+ *                 description: Date till which centre is valid
+ *                 example: 1-1-2023
+ *               centre_head_contact_number:
+ *                 type: integer
+ *                 description: Centre head's contact number
+ *                 example: 9999999999
+ *               sector_village:
+ *                 type: string
+ *                 description: Centre's sector_village
+ *                 example: 4
+ *               email_id:
+ *                 type: string
+ *                 description: Centre head's email-id
+ *                 example: 221-B
+ *               username:
+ *                 type: string
+ *                 description: Centre head's user-name
+ *                 example: Abla
+ *               password:
+ *                 type: string
+ *                 description: Centre head account's password
+ *                 example: 9999999999
+ *               isActive:
+ *                 type: boolean
+ *                 description: whether centre is active or not
+ *                 example: true
+ *     responses:
+ *       200:
+ *         description: Centre added successfully.
+ *       500:
+ *         description: Something went wrong
+ */
+
+router.post("/add-centre", AdminController.add_centre);
+
+/**
+ * @swagger
+ * /admin/update-centre:
+ *   put:
+ *     tags:
+ *       - admin
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               centre_code:
+ *                 type: string
+ *                 description: Centre's code.
+ *                 example: c1
+ *               centre_name:
+ *                 type: string
+ *                 description: Centre's name.
+ *                 example: a1 centre
+ *               centre_head_name:
+ *                 type: string
+ *                 description: Centre head's name.
+ *                 example: Nattu
+ *               centre_contact_number:
+ *                 type: integer
+ *                 description: Centre's contact number
+ *                 example: 0129-4128527
+ *               centre_address:
+ *                 type: string
+ *                 description: Centre's address
+ *                 example: 221B Baker's street
+ *               centre_start_date:
+ *                 type: string
+ *                 description: Date when centre started.
+ *                 example: 1-1-2023
+ *               centre_valid_upto:
+ *                 type: string
+ *                 description: Date till centre is valid upto.
+ *                 example: 1-5-2023
+ *               centre_head_contact_number:
+ *                 type: integer
+ *                 description: Centre head's contact number
+ *                 exapmle: 8888888888
+ *               sector_village:
+ *                 type: string
+ *                 description: Centre's address sector/village
+ *                 exapmle: 88
+ *               email_id:
+ *                 type: string
+ *                 description: Centre head's email-id
+ *                 exapmle: a@a.com
+ *               username:
+ *                 type: string
+ *                 description: Centre head's username
+ *                 exapmle: a
+ *               password:
+ *                 type: string
+ *                 description: Centre head account's password
+ *                 exapmle: a
+ *     responses:
+ *       200:
+ *         description: Centre details updated successfully.
+ *       500:
+ *         description: Something went wrong
+ */
+
+router.put("/update-centre", AdminController.update_centre);
+
 // admin creating/updating staff related apis
-
-
 
 router.get("/staff-window", checkLogInAdmin, AdminController.staff_window);
 
 /**
  * @swagger
  * /admin/fetch-all-staff-details:
- *   post:
+ *   get:
  *     tags:
  *       - admin
  *     responses:
@@ -157,13 +311,11 @@ router.get("/staff-window", checkLogInAdmin, AdminController.staff_window);
  *         description: Something went wrong
  */
 
-router.post(
+router.get(
   "/fetch-all-staff-details",
   auth,
   AdminController.fetch_all_staff_details
 );
-
-
 
 router.get("/add-staff", checkLogInAdmin, AdminController.add_staff_window);
 
@@ -265,15 +417,11 @@ router.get("/add-staff", checkLogInAdmin, AdminController.add_staff_window);
 
 router.post("/add-staff", auth, AdminController.add_staff);
 
-
-
 router.get(
   "/update-staff_1",
   checkLogInAdmin,
   AdminController.update_staff_window_1
 );
-
-
 
 router.get(
   "/update-staff_2",
@@ -384,5 +532,130 @@ router.post(
  */
 
 router.post("/fetch-staff-details", auth, AdminController.fetchStaffDetails);
+
+// enquiry related routes
+
+/**
+ * @swagger
+ * /admin/fetch-all-enquiry-details:
+ *   get:
+ *     tags:
+ *       - admin
+ *     responses:
+ *       200:
+ *         description: All enquiry details fetched successfully.
+ *       500:
+ *         description: Something went wrong
+ */
+
+router.get(
+  "/fetch-all-enquiry-details",
+  auth,
+  AdminController.fetch_all_staff_details
+);
+
+/**
+ * @swagger
+ * /admin/add-enquiry:
+ *   post:
+ *     tags:
+ *       - admin
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               Date_and_time:
+ *                 type: dateTime
+ *                 description: Date and time when enquiry is created.
+ *                 example: 2023-02-15 16:49:44
+ *               Enquiry_name:
+ *                 type: string
+ *                 description: Name of enquiry
+ *                 example: Enquiry1
+ *               Course:
+ *                 type: string
+ *                 description: course name
+ *                 example: e-taxation
+ *               Contact_number_1:
+ *                 type: integer
+ *                 description: Contact number of enquirer
+ *                 example: 8888888888
+ *               Contact_number_2:
+ *                 type: integer
+ *                 description: Secondary contact number of enquirer
+ *                 example: 777777777
+ *               Address:
+ *                 type: string
+ *                 description: Address of enquirer
+ *                 example: 221B Baker's street
+ *               isActive:
+ *                 type: boolean
+ *                 description: whether the enquiry is still active or not
+ *                 example: true
+ *               Follow_up_date:
+ *                 type: date
+ *                 description: Follow up date of enquiry
+ *                 example: 1-1-2023
+ *               Counsellor_name:
+ *                 type: string
+ *                 description: Counsellor name
+ *                 example: Rohit
+ *               Counsellor_remarks:
+ *                 type: string
+ *                 description: Counsellor's remarks
+ *                 example: Promising enquiry
+ *     responses:
+ *       200:
+ *         description: Enquiry added successfully.
+ *       500:
+ *         description: Something went wrong
+ */
+
+router.post("/add-enquiry", auth, AdminController.add_enquiry);
+
+/**
+ * @swagger
+ * /admin/enquiry-follow-up:
+ *   put:
+ *     tags:
+ *       - admin
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               Follow_up_date:
+ *                 type: string
+ *                 description: Centre name.
+ *                 example: a1 centre
+ *               Counsellor_name:
+ *                 type: string
+ *                 description: Centre head name.
+ *                 example: Nattu
+ *               Counsellor_remarks:
+ *                 type: integer
+ *                 description: Centre contact number
+ *                 example: 0129-4128527
+ *               Enquiry_status:
+ *                 type: string
+ *                 description: Centre address
+ *                 example: 221B Baker street
+ *               Enquiry_Number:
+ *                 type: integer
+ *                 description: Enquiry number.
+ *                 example: 1
+ *     responses:
+ *       200:
+ *         description: Enquiry-follow-up updated successfully.
+ *       500:
+ *         description: Something went wrong
+ */
+
+router.put("/enquiry-follow-up", auth, AdminController.enquiry_follow_up);
 
 module.exports = router;
