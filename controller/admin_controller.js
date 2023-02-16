@@ -56,7 +56,7 @@ const login_admin = async (req, res) => {
       } else {
         //console.log("awdawdawdawd" + req.session);
         const token = jwt.sign(
-          { username: admin_credentials.username, isActive: true },
+          { id: admin_credentials.id, isActive: true },
           config.jwtSecret,
           { expiresIn: "30m" }
         );
@@ -122,6 +122,49 @@ const admin_logout = async (req, res) => {
 
 const staff_window = (req, res) => {
   res.render('admin_staff_window')
+}
+
+const fetch_all_centre_details = async (req, res) => {
+  try {
+    const Centres = db.Centres_Model;
+    const result = await Centres.findAll();
+    res.status(200).send({
+      status: 200,
+      data: result,
+      message: "Details fetched successfully",
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ status: 500, data: error, message: "Something went wrong" });
+  }
+}
+
+const add_centre = async (req, res) => {
+  try {
+    var centre_data = req.body;
+    const Centres = db.Centres_Model;
+    console.log('3333', centre_data);
+    const result = await Centres.create(centre_data);
+    res
+      .status(200)
+      .send({ status: 200, data: result, message: "Centre added successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ status: 500, data: error, message: "Something went wrong" });
+  }
+};
+
+const update_centre = async (req, res) => {
+  try {
+    var data = req.body;
+    const Centres = db.Centres_Model
+    const result = await Centres.update({ centre_name: data.centre_name, centre_head_name: data.centre_head_name, centre_contact_number: data.centre_contact_number, centre_address: data.centre_address, centre_start_date: data.centre_start_date, centre_valid_upto: data.centre_valid_upto, centre_head_contact_number: data.centre_head_contact_number, sector_village: data.sector_village, email_id: data.email_id, username: data.username, password: data.password }, {where: { centre_code: data.centre_code }, individualHooks: true})
+    res.status(200).send({status: 200, data: result, message: "Updated centres data successfully"})
+  } catch (error) {
+    res.status(500).send({status: 500, data: error, message: "Something went wrong"})
+  }
 }
 
 const fetch_all_staff_details = async (req, res) => {
@@ -234,5 +277,59 @@ const fetchStaffDetails = async (req, res) => {
   }
 };
 
+// enquiry related routes
 
-module.exports = { admin, admin_login, login_admin, admin_dashboard, admin_change_password, change_password_admin, admin_logout, staff_window, fetch_all_staff_details, add_staff_window, add_staff, update_staff_window_1, update_staff_window_2, update_staff_status, check_employment_number, fetchStaffDetails };
+const fetch_all_enquiry_details = async (req, res) => {
+  try {
+    const Enquiry = db.Enquiry_Model;
+    const result = await Enquiry.findAll();
+    var result_data = { Date_and_time: result.Date_and_time, Enquiry_name: result.Enquiry_name, Course: result.Course, Address: result.Address, Contact_number_1: result.Contact_number_1, status: result.isActive }
+    res.status(200).send({
+      status: 200,
+      data: result_data,
+      message: "Details fetched successfully",
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ status: 500, data: error, message: "Something went wrong" });
+  }
+};
+
+const add_enquiry = async (req, res) => {
+  try {
+    var enquiry_data = req.body;
+    console.log('1111');
+    const Enquiry = db.Enquiry_Model;
+    console.log('2222');
+    console.log('3333', enquiry_data);
+    const result = await Enquiry.create(enquiry_data);
+    res
+      .status(200)
+      .send({ status: 200, data: result, message: "Enquiry created successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ status: 500, data: error, message: "Something went wrong" });
+  }
+};
+
+const enquiry_follow_up = async (req, res) => {
+  try {
+    var enquiry_follow_up_data = req.body;
+    console.log('1111');
+    const Enquiry = db.Enquiry_Model;
+    console.log('2222');
+    console.log('3333', enquiry_follow_up_data);
+    const result = await Enquiry.update({ Follow_up_date: enquiry_follow_up_data.Follow_up_date, Counsellor_name: enquiry_follow_up_data.Counsellor_name, Counsellor_remarks: enquiry_follow_up_data.Counsellor_remarks, isActive: enquiry_follow_up_data.Enquiry_status}, {where: { id: enquiry_follow_up_data.Enquiry_Number }, individualHooks: true});
+    res
+      .status(200)
+      .send({ status: 200, data: result, message: "Enquiry/Follow-up updated successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ status: 500, data: error, message: "Something went wrong" });
+  }
+};
+
+module.exports = { admin, admin_login, login_admin, admin_dashboard, admin_change_password, change_password_admin, admin_logout, staff_window, fetch_all_centre_details, add_centre, update_centre, fetch_all_staff_details, add_staff_window, add_staff, update_staff_window_1, update_staff_window_2, update_staff_status, check_employment_number, fetchStaffDetails, fetch_all_enquiry_details, add_enquiry, enquiry_follow_up };

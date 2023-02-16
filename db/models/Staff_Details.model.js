@@ -94,10 +94,13 @@ const Staff_Details_Model = (Sequelize, sequelize) => {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      status: {
+      isActive: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        default: true
+        default: true,
+        validate: {
+            notEmpty: true
+        }
       },
       Promotion_date: {
         type: Sequelize.STRING,

@@ -13,6 +13,7 @@ const Course_Details_Model = require("./Course_Details.model");
 const Centres_Model = require("./Centres.model");
 const Admin_Model = require("./Admin.model");
 const Exam_Model = require("./Exam.model");
+const Enquiry_Model = require("./Enquiry.model");
 
 // connecting with mysql database
 const sequelize = new Sequelize(database, username, password, {
@@ -52,5 +53,6 @@ db.Course_Details_Model = Course_Details_Model(Sequelize, sequelize);
 db.Centres_Model = Centres_Model(Sequelize, sequelize);
 db.Admin_Model = Admin_Model(Sequelize, sequelize);
 db.Exam_Model = Exam;
+db.Enquiry_Model = Enquiry_Model(Sequelize, sequelize)
 
 module.exports = db;
