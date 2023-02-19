@@ -332,4 +332,122 @@ const enquiry_follow_up = async (req, res) => {
   }
 };
 
-module.exports = { admin, admin_login, login_admin, admin_dashboard, admin_change_password, change_password_admin, admin_logout, staff_window, fetch_all_centre_details, add_centre, update_centre, fetch_all_staff_details, add_staff_window, add_staff, update_staff_window_1, update_staff_window_2, update_staff_status, check_employment_number, fetchStaffDetails, fetch_all_enquiry_details, add_enquiry, enquiry_follow_up };
+// Courses related functions
+
+const fetch_all_courses_details = async (req, res) => {
+  try {
+    const Course_Details = db.Course_Details_Model;
+    const result = await Course_Details.findAll();
+    var result_data = { course_code: result.course_code, course_name: result.course, Duration: result.duration, Registration_fee: result.registration_fee, Monthly_fee: result.monthly_fee}
+    res.status(200).send({
+      status: 200,
+      data: result_data,
+      message: "Courses details fetched successfully",
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ status: 500, data: error, message: "Something went wrong" });
+  }
+};
+
+const add_course = async (req, res) => {
+  try {
+    var course_data = req.body;
+    console.log('1111');
+    const Course_Details = db.Course_Details_Model;
+    console.log('2222');
+    console.log('3333', course_data);
+    const result = await Course_Details.create(course_data);
+    res
+      .status(200)
+      .send({ status: 200, data: result, message: "Course created successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ status: 500, data: error, message: "Something went wrong" });
+  }
+};
+
+const update_course = async (req, res) => {
+  try {
+    var data = req.body;
+    const Course_Details = db.Course_Details_Model
+    const result = await Course_Details.update({ course: data.course, duration: data.duration, registration_fee: data.registration_fee, monthly_fee: data.monthly_fee }, {where: { course_code: data.course_code }, individualHooks: true})
+    res.status(200).send({status: 200, data: result, message: "Updated course data successfully"})
+  } catch (error) {
+    res.status(500).send({status: 500, data: error, message: "Something went wrong"})
+  }
+}
+
+// Student related functions
+
+const fetch_all_student_details = async (req, res) => {
+  try {
+    const Student_Registration = db.Student_Registration_Model;
+    const result = await Student_Registration.findAll();
+    var result_data = { enrollment_number: result.enrollment_number, center_code: result.center_code, registration_number: result.registration_number, Student_Name: result.Student_Name, course: result.course, Date_of_joining: result.Date_of_joining }
+    res.status(200).send({
+      status: 200,
+      data: result_data,
+      message: "Student details fetched successfully",
+    });
+  } catch (error) {
+    res.status(500).send({status: 500, data: error, message: "Something went wrong"})
+  }
+}
+
+const register_student = async (req, res) => {
+  try {
+    const Student_Registration = db.Student_Registration_Model;
+    var student_data = req.body;
+    student_data.Password = student_data.enrollment_number;
+    const result = await Student_Registration.create(student_data);
+    res.send({
+      status: 200,
+      data: result,
+      message: "Successfully registered student",
+    });
+  } catch (error) {
+    res.status(500).send({ data: error, message: "Something went wrong" });
+  }
+};
+
+const update_student_personal_details = async (req, res) => {
+  try {
+    const Student_Registration = db.Student_Registration_Model;
+    var updated_details = req.body;
+    console.log("222222", updated_details);
+    const result = await Student_Registration.update(
+      {
+        Father_Name: updated_details.Father_Name,
+        Date_of_birth: updated_details.Date_of_birth,
+        Marital_status: updated_details.Marital_Status,
+        Sex: updated_details.Sex,
+        Contact_number: updated_details.Contact_number,
+        Parents_contact: updated_details.Parents_contact,
+        Address: updated_details.Address,
+        Sector_Village_Colony: updated_details.Sector_Village_Colony,
+        City: updated_details.City,
+        Email_ID: updated_details.Email_ID
+      },
+      {
+        where: { enrollment_number: updated_details.enrollment_number },
+        // individualHooks: true,
+      }
+    );
+    res.status(200).send({
+      status: 200,
+      data: result,
+      message: "Information updated successfully",
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ status: 500, data: error, message: "Something went wrong" });
+  }
+};
+
+
+
+module.exports = { admin, admin_login, login_admin, admin_dashboard, admin_change_password, change_password_admin, admin_logout, staff_window, fetch_all_centre_details, add_centre, update_centre, fetch_all_staff_details, add_staff_window, add_staff, update_staff_window_1, update_staff_window_2, update_staff_status, check_employment_number, fetchStaffDetails, fetch_all_enquiry_details, add_enquiry, enquiry_follow_up, fetch_all_courses_details, add_course, update_course, fetch_all_student_details, register_student, update_student_personal_details };
