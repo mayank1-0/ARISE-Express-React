@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -7,33 +8,32 @@ const bodyParser = require("body-parser");
 const expressLayouts = require("express-ejs-layouts");
 const db = require("./db/models/index");
 const session = require("express-session");
+// eslint-disable-next-line no-undef
 global.__basedir = __dirname + "/ARISE1/..";
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express"),
-
- swaggerDefinition = {
-  openapi: '3.0.0',
-  info: {
-    title: 'ARISE',
-    version: '1.0.0',
-    description:
-      'List of all APIs.',
-    license: {
-      name: 'Licensed Under MIT',
-      url: 'https://spdx.org/licenses/MIT.html',
+  swaggerDefinition = {
+    openapi: "3.0.0",
+    info: {
+      title: "ARISE",
+      version: "1.0.0",
+      description: "List of all APIs.",
+      license: {
+        name: "Licensed Under MIT",
+        url: "https://spdx.org/licenses/MIT.html",
+      },
+      contact: {
+        name: "JSONPlaceholder",
+        url: "https://jsonplaceholder.typicode.com",
+      },
     },
-    contact: {
-      name: 'JSONPlaceholder',
-      url: 'https://jsonplaceholder.typicode.com',
-    },
-  },
-  servers: [
-    {
-      url: 'http://localhost:3000/api/v1',
-      description: 'Development server',
-    },
-  ],
-};
+    servers: [
+      {
+        url: "http://localhost:3000/api/v1",
+        description: "Development server",
+      },
+    ],
+  };
 
 const options = {
   swaggerDefinition,
@@ -85,6 +85,7 @@ app.use(function (req, res, next) {
 db.sequelize.sync();
 
 // error handler
+// eslint-disable-next-line no-unused-vars
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;

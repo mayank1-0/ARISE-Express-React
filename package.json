@@ -25,11 +25,12 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
     "randomstring": "^1.2.3",
-    "sequelize": "^6.28.0",
+    "sequelize": "^6.32.0",
     "swagger-jsdoc": "5.0.1",
     "swagger-ui-express": "^4.6.0"
   },
   "devDependencies": {
+    "eslint": "^8.42.0",
     "nodemon": "^2.0.20"
   }
 }
