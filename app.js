@@ -17,7 +17,7 @@ const swaggerUi = require("swagger-ui-express"),
     info: {
       title: "ARISE",
       version: "1.0.0",
-      description: "List of all APIs.",
+      description: "ARISE is an educational institute for teaching undergraduates and graduates computer skills for example Tally, Python etc.",
       license: {
         name: "Licensed Under MIT",
         url: "https://spdx.org/licenses/MIT.html",
