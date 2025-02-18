@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+var http = require("http");
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -95,5 +96,44 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
+
+var server = http.createServer(app);
+
+server.listen("3000");
+server.on("error", onError);
+server.on("listening", onListening);
+
+function onError(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case "EACCES":
+      console.log(bind + " requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.log(bind + " is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+var debug = require("debug")("arise:server");
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  debug("Listening on " + bind);
+}
 
 module.exports = app;
